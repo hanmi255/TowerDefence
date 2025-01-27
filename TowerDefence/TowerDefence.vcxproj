@@ -140,13 +140,10 @@
     <ClInclude Include="GameManager.hpp" />
     <ClInclude Include="Manager.h" />
     <ClInclude Include="Map.hpp" />
-    <ClInclude Include="ResouceManager.hpp" />
+    <ClInclude Include="ResourceManager.hpp" />
     <ClInclude Include="Route.hpp" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Wave.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="TowerDefence.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

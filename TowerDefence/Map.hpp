@@ -11,10 +11,12 @@
 #include <unordered_map>
 #include <stdexcept>
 
+#include <iostream>
+
 class Map
 {
 public:
-	typedef std::unordered_map<int, Route> SpawnerRoutePool;	// 生成路由池
+	using SpawnerRoutePool = std::unordered_map<int, Route>;	// 生成路由池
 
 public:
 	Map() = default;
@@ -47,7 +49,7 @@ public:
 		if (tile_map_temp.empty() || tile_map_temp[0].empty()) 
 			throw std::runtime_error("Invalid map data in file: " + file_path);
 
-		m_tile_map = std::move(tile_map_temp);
+		this->m_tile_map = tile_map_temp;
 
 		generateMapCache();
 
@@ -68,12 +70,12 @@ public:
 	size_t getHeight() const { return m_tile_map.size(); }
 
 	const TileMap& getTileMap() const { return m_tile_map; }								// 获取地图数据
-	const SDL_Point& getHomeIndex() const { return m_index_home; }							//获取房屋索引
-	const SpawnerRoutePool& getSpawnerRoutePool() const { return m_spawner_route_pool; }	//获取生成路由池
+	const SDL_Point& getIndexHome() const { return m_index_home; }							// 获取房屋索引
+	const SpawnerRoutePool& getSpawnerRoutePool() const { return m_spawner_route_pool; }	// 获取生成路由池
 
 private:
 	TileMap m_tile_map;
-	SDL_Point m_index_home = { 0, 0 };
+	SDL_Point m_index_home = { 0 };
 	SpawnerRoutePool m_spawner_route_pool;
 
 private:
@@ -143,7 +145,8 @@ private:
 				if(tile.special_flag < 0) continue;
 
 				if (tile.special_flag == 0)	{
-					m_index_home = { x, y };
+					m_index_home.x = x;
+					m_index_home.y = y;
 				}
 				else {
 					m_spawner_route_pool[tile.special_flag] = Route(m_tile_map, { x, y });

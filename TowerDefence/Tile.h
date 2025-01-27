@@ -24,4 +24,4 @@ struct Tile
 	Direction direction = Direction::NONE;	// 默认方向
 };
 
-typedef std::vector<std::vector<Tile>> TileMap;
+using TileMap = std::vector<std::vector<Tile>>;

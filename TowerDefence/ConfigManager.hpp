@@ -11,11 +11,9 @@
 #include <sstream>
 #include <vector>
 #include <memory>
-#include <span>
 #include <array>
 
-class ConfigManager : public Manager<ConfigManager>
-{
+class ConfigManager : public Manager<ConfigManager> {
 	friend class Manager<ConfigManager>;
 
 public:
@@ -56,7 +54,7 @@ public:
 	};
 
 public:
-	std::unique_ptr<Map> map;						 // 地图
+	Map map;										 // 地图
 	std::vector<Wave> wave_list;					 // 波次列表
 
 	int level_archer = 0;							 // 弓箭手塔等级
@@ -302,9 +300,8 @@ private:
 
 		// 解析生成事件列表
 		auto json_spawn_list = cJSON_GetObjectItem(json_wave, "spawn_list");
-		if (!json_spawn_list || json_spawn_list->type != cJSON_Array) {
+		if (!json_spawn_list || json_spawn_list->type != cJSON_Array) 
 			return false;
-		}
 
 		cJSON* json_spawn_event = nullptr;
 		cJSON_ArrayForEach(json_spawn_event, json_spawn_list) {
