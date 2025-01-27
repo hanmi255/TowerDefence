@@ -20,11 +20,14 @@ struct SDLDeleter {
     void operator()(SDL_Texture* t) const { SDL_DestroyTexture(t); }
 };
 
+/**
+ * @brief 游戏管理器类，负责游戏生命周期和资源管理
+ */
 class GameManager : public Manager<GameManager> {
     friend class Manager<GameManager>;
 
 public:
-    // 运行游戏
+    /** @brief 运行游戏主循环 */
     int run(int argc, char** argv) 
     {
         using clock = std::chrono::high_resolution_clock;
@@ -52,13 +55,20 @@ public:
 
             // 更新和渲染
             onUpdate(delta_time);
+
+            SDL_SetRenderDrawColor(m_renderer.get(), 0, 0, 0, 255);
+            SDL_RenderClear(m_renderer.get());
+
             onRender();
+
+            SDL_RenderPresent(m_renderer.get());
         }
 
         return 0;
     }
 
 protected:
+    /** @brief 初始化游戏系统 */
     GameManager() 
     {
         initializeSDL();
@@ -69,6 +79,7 @@ protected:
         initAssert(generateTileMapTexture(), "瓦片地图纹理生成失败");
     }
 
+    /** @brief 清理SDL资源 */
     ~GameManager() 
     {
         TTF_Quit();
@@ -78,15 +89,15 @@ protected:
     }
 
 private:
-    SDL_Event m_event;
-    bool m_quit = false;
+    SDL_Event m_event;                                       // SDL事件
+    bool m_quit = false;                                     // 退出标志
 
-    std::unique_ptr<SDL_Window, SDLDeleter> m_window;
-    std::unique_ptr<SDL_Renderer, SDLDeleter> m_renderer;
-    std::unique_ptr<SDL_Texture, SDLDeleter> m_tex_tile_map;
+    std::unique_ptr<SDL_Window, SDLDeleter> m_window;        // 游戏窗口
+    std::unique_ptr<SDL_Renderer, SDLDeleter> m_renderer;    // 渲染器
+    std::unique_ptr<SDL_Texture, SDLDeleter> m_tex_tile_map; // 瓦片地图纹理
 
 private:
-    // 初始化断言
+    /** @brief 初始化检查 */
     void initAssert(bool flag, const char* errorMessage)
     {
         if (flag) return;
@@ -95,7 +106,7 @@ private:
         exit(-1);
     }
 
-    // SDL初始化
+    /** @brief 初始化SDL系统 */
     void initializeSDL() 
     {
         initAssert(!SDL_Init(SDL_INIT_EVERYTHING), u8"SDL初始化失败");
@@ -107,7 +118,7 @@ private:
         SDL_SetHint(SDL_HINT_IME_SHOW_UI, "1");
     }
 
-    // 加载配置
+    /** @brief 加载配置文件 */
     void loadConfig() 
     {
         initAssert(ConfigManager::instance()->map.loadMap("map.csv"), u8"地图加载失败");
@@ -115,7 +126,7 @@ private:
         initAssert(ConfigManager::instance()->loadGameConfig("config.json"), u8"游戏配置加载失败");
     }
 
-    // 创建窗口和渲染器
+    /** @brief 创建窗口和渲染器 */
     void createWindowAndRenderer()
     {
         m_window.reset(SDL_CreateWindow(
@@ -138,7 +149,7 @@ private:
         initAssert(m_renderer.get(), u8"创建渲染器失败");
     }
 
-    // 事件处理
+    /** @brief 处理SDL事件 */
     void processEvents()
     {
         while (SDL_PollEvent(&m_event)) {
@@ -153,16 +164,17 @@ private:
         }
     }
 
-    // 处理输入
+    /** @brief 处理输入 */
     void onInput()
     {
     }
-    // 更新游戏状态
+
+    /** @brief 更新游戏状态 */
     void onUpdate(double delta_time)
     {
     }
 
-    // 渲染游戏画面
+    /** @brief 渲染游戏画面 */
     void onRender() 
     {
         static ConfigManager* config = ConfigManager::instance();
@@ -170,6 +182,7 @@ private:
         SDL_RenderCopy(m_renderer.get(), m_tex_tile_map.get(), nullptr, &rect_dst);
     }
 
+    /** @brief 生成瓦片地图纹理 */
     bool generateTileMapTexture() {
         try {
             // 获取必要的资源和配置
@@ -181,14 +194,14 @@ private:
             // 获取tile set纹理
             auto tex_tile_set = ResourceManager::instance()->getTexturePool().find(ResID::Tex_TileSet);
             if (tex_tile_set == ResourceManager::instance()->getTexturePool().end()) {
-                SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Failed to find tile set texture");
+                SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "获取tile set纹理失败");
                 return false;
             }
 
             // 查询tile set尺寸
             int tile_set_width, tile_set_height;
             if (SDL_QueryTexture(tex_tile_set->second, nullptr, nullptr, &tile_set_width, &tile_set_height) < 0) {
-                SDL_LogError(SDL_LOG_CATEGORY_RENDER, "Failed to query tile set texture: %s", SDL_GetError());
+                SDL_LogError(SDL_LOG_CATEGORY_RENDER, "查询tile set尺寸失败: %s", SDL_GetError());
                 return false;
             }
 
@@ -207,7 +220,7 @@ private:
             ));
 
             if (!m_tex_tile_map) {
-                SDL_LogError(SDL_LOG_CATEGORY_RENDER, "Failed to create tile map texture: %s", SDL_GetError());
+                SDL_LogError(SDL_LOG_CATEGORY_RENDER, "创建tile map纹理失败: %s", SDL_GetError());
                 return false;
             }
 
@@ -222,13 +235,13 @@ private:
 
             // 设置混合模式
             if (SDL_SetTextureBlendMode(m_tex_tile_map.get(), SDL_BLENDMODE_BLEND) < 0) {
-                SDL_LogError(SDL_LOG_CATEGORY_RENDER, "Failed to set blend mode: %s", SDL_GetError());
+                SDL_LogError(SDL_LOG_CATEGORY_RENDER, "设置混合模式失败: %s", SDL_GetError());
                 return false;
             }
 
             // 设置渲染目标
             if (SDL_SetRenderTarget(m_renderer.get(), m_tex_tile_map.get()) < 0) {
-                SDL_LogError(SDL_LOG_CATEGORY_RENDER, "Failed to set render target: %s", SDL_GetError());
+                SDL_LogError(SDL_LOG_CATEGORY_RENDER, "设置渲染目标失败: %s", SDL_GetError());
                 return false;
             }
 
@@ -255,7 +268,7 @@ private:
                     };
 
                     if (SDL_RenderCopy(m_renderer.get(), tex_tile_set->second, &rect_src, &rect_dst) < 0) {
-                        SDL_LogError(SDL_LOG_CATEGORY_RENDER, "Failed to render terrain: %s", SDL_GetError());
+                        SDL_LogError(SDL_LOG_CATEGORY_RENDER, "渲染地形失败: %s", SDL_GetError());
                         return false;
                     }
 
@@ -269,7 +282,7 @@ private:
                         };
 
                         if (SDL_RenderCopy(m_renderer.get(), tex_tile_set->second, &rect_src, &rect_dst) < 0) {
-                            SDL_LogError(SDL_LOG_CATEGORY_RENDER, "Failed to render decoration: %s", SDL_GetError());
+                            SDL_LogError(SDL_LOG_CATEGORY_RENDER, "渲染装饰失败: %s", SDL_GetError());
                             return false;
                         }
                     }
@@ -287,25 +300,25 @@ private:
 
             auto tex_home = ResourceManager::instance()->getTexturePool().find(ResID::Tex_Home);
             if (tex_home == ResourceManager::instance()->getTexturePool().end()) {
-                SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Failed to find home texture");
+                SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "获取home标记失败");
                 return false;
             }
 
             if (SDL_RenderCopy(m_renderer.get(), tex_home->second, nullptr, &rect_dst) < 0) {
-                SDL_LogError(SDL_LOG_CATEGORY_RENDER, "Failed to render home: %s", SDL_GetError());
+                SDL_LogError(SDL_LOG_CATEGORY_RENDER, "渲染home标记失败: %s", SDL_GetError());
                 return false;
             }
 
             // 恢复默认渲染目标
             if (SDL_SetRenderTarget(m_renderer.get(), nullptr) < 0) {
-                SDL_LogError(SDL_LOG_CATEGORY_RENDER, "Failed to reset render target: %s", SDL_GetError());
+                SDL_LogError(SDL_LOG_CATEGORY_RENDER, "恢复默认渲染目标失败: %s", SDL_GetError());
                 return false;
             }
 
             return true;
         }
         catch (const std::exception& e) {
-            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Exception in generate_tile_map_texture: %s", e.what());
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "生成瓦片地图纹理失败: %s", e.what());
             return false;
         }
     }

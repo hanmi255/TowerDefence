@@ -7,6 +7,10 @@
 #include <SDL_ttf.h>
 #include <unordered_map>
 
+/**
+ * @enum ResID
+ * @brief 资源ID枚举类，用于标识所有游戏资源
+ */
 enum class ResID
 {
 	Tex_TileSet,
@@ -89,6 +93,11 @@ enum class ResID
 	Font_Main
 };
 
+/**
+ * @brief 游戏资源管理器，负责加载和管理所有游戏资源
+ *
+ * 使用单例模式实现，管理游戏中的纹理、音效、音乐和字体资源
+ */
 class ResourceManager : public Manager<ResourceManager>
 {
 	friend class Manager<ResourceManager>;
@@ -107,6 +116,11 @@ public:
 	const MusicPool& getMusicPool() const { return m_musicPool; }
 	const FontPool& getFontPool() const { return m_fontPool; }
 
+	/**
+	 * @brief 从文件加载所有游戏资源
+	 * @param renderer SDL渲染器指针
+	 * @return 加载是否成功
+	 */
 	bool loadFromFile(SDL_Renderer* renderer)
 	{
 		m_texturePool[ResID::Tex_TileSet] = IMG_LoadTexture(renderer, "res/tileset.png");
@@ -208,9 +222,9 @@ protected:
 	~ResourceManager() = default;
 
 private:
-	TexturePool m_texturePool;
-	SoundPool m_soundPool;
-	MusicPool m_musicPool;
-	FontPool m_fontPool;
+	TexturePool m_texturePool;    // 纹理资源池
+	SoundPool m_soundPool;        // 音效资源池
+	MusicPool m_musicPool;        // 音乐资源池
+	FontPool m_fontPool;          // 字体资源池
 };
 

@@ -1,19 +1,24 @@
 ﻿#pragma once
 
 #include "EnemyType.h"
-
 #include <vector>
 
+/**
+ * @brief 描述一波敌人的生成配置
+ */
 struct Wave
 {
-	struct SpawnEvent
-	{
-		double interval = 0;						// 事件间隔
-		int spawn_point = 1;						// 生成点
-		EnemyType enemy_type = EnemyType::Slim;		// 敌人类型
-	};
+    /**
+     * @brief 单个敌人生成事件的配置
+     */
+    struct SpawnEvent
+    {
+        double interval = 0;                      // 当前事件与上一个事件的时间间隔(秒)
+        int spawn_point = 1;                      // 敌人的生成点编号
+        EnemyType enemy_type = EnemyType::Slim;   // 要生成的敌人类型
+    };
 
-	double rewards = 0;								// 击杀奖励
-	double interval = 0;							// 下一波间隔
-	std::vector<SpawnEvent> spawn_event_list;			//生成事件
+    double rewards = 0;                           // 完成该波次可获得的奖励
+    double interval = 0;                          // 与下一波的时间间隔(秒)
+    std::vector<SpawnEvent> spawn_event_list;     // 该波次包含的所有生成事件列表
 };

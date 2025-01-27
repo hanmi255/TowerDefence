@@ -13,78 +13,102 @@
 #include <memory>
 #include <array>
 
+/**
+ * @brief 游戏配置管理类，负责加载和管理所有游戏相关的配置数据
+ * 采用单例模式设计，继承自Manager基类
+ */
 class ConfigManager : public Manager<ConfigManager> {
 	friend class Manager<ConfigManager>;
 
 public:
-	struct BasicTemplate  // 基础配置
-	{
-		std::string window_title = u8"Tower Defence";
-		int window_width = 1280;
-		int window_height = 720;
+	/**
+	 * @brief 基础游戏配置结构体
+	 */
+	struct BasicTemplate {
+		std::string window_title = u8"Tower Defence";  // 游戏窗口标题
+		int window_width = 1280;                       // 窗口宽度
+		int window_height = 720;                       // 窗口高度
 	};
 
-	struct PlayerTemplate // 玩家配置
-	{
-		double speed = 3.0;
-		double normal_attack_interval = 0.5;
-		double normal_attack_damage = 0;
-		double skill_interval = 10;
-		double skill_damage = 1;
+	/**
+	 * @brief 玩家角色配置结构体
+	 */
+	struct PlayerTemplate {
+		double speed = 3.0;						// 移动速度
+		double normal_attack_interval = 0.5;    // 普通攻击间隔时间
+		double normal_attack_damage = 0;        // 普通攻击伤害
+		double skill_interval = 10;             // 技能冷却时间
+		double skill_damage = 1;                // 技能伤害
 	};
 
-	struct EnemyTemplate  // 敌人配置
-	{
-		double hp = 100;
-		double speed = 1.0;
-		double damage = 1;
-		double reward_ratio = 0.5;
-		double recover_interval = 10;
-		double recover_range = 0;
-		double recover_intensity = 25;
+	/**
+	 * @brief 敌人单位配置结构体
+	 */
+	struct EnemyTemplate {
+		double hp = 100;                 // 生命值
+		double speed = 1.0;              // 移动速度
+		double damage = 1;               // 攻击伤害
+		double reward_ratio = 0.5;		 // 击杀奖励系数
+		double recover_interval = 10;    // 恢复间隔时间
+		double recover_range = 0;        // 恢复范围
+		double recover_intensity = 25;   // 恢复强度
 	};
 
-	struct TowerTemplate  // 防御塔配置
-	{
-		double interval[10] = { 1 };
-		double damage[10] = { 25 };
-		double view_range[10] = { 5 };
-		double cost[10] = { 50 };
-		double upgrade_cost[9] = { 75 };
+	/**
+	 * @brief 防御塔配置结构体
+	 */
+	struct TowerTemplate {
+		double interval[10] = { 1 };        // 攻击间隔时间（各等级）
+		double damage[10] = { 25 };         // 攻击伤害（各等级）
+		double view_range[10] = { 5 };      // 攻击范围（各等级）
+		double cost[10] = { 50 };           // 建造费用（各等级）
+		double upgrade_cost[9] = { 75 };    // 升级费用（各等级）
 	};
 
 public:
-	Map map;										 // 地图
-	std::vector<Wave> wave_list;					 // 波次列表
+	// 游戏状态相关成员
+	Map map;                                  // 游戏地图实例
+	std::vector<Wave> wave_list;              // 敌人波次列表
 
-	int level_archer = 0;							 // 弓箭手塔等级
-	int level_axeman = 0;							 // 斧头兵塔等级
-	int level_gunner = 0;							 // 枪手塔等级
+	// 防御塔等级状态
+	int level_archer = 0;                     // 弓箭手塔当前等级
+	int level_axeman = 0;                     // 斧头兵塔当前等级
+	int level_gunner = 0;                     // 枪手塔当前等级
 
-	bool is_game_win = true;						 // 游戏是否胜利
-	bool is_game_over = false;						 // 游戏是否结束
+	// 游戏状态标志
+	bool is_game_win = true;                  // 游戏胜利标志
+	bool is_game_over = false;                // 游戏结束标志
 
-	SDL_Rect rect_tile_map = { 0 };					 // 瓦片地图的矩形
+	SDL_Rect rect_tile_map = { 0 };           // 地图瓦片区域
 
-	BasicTemplate basic_template;					 // 基础配置
+	// 各类型配置模板实例
+	BasicTemplate basic_template;              // 基础配置
+	PlayerTemplate player_template;            // 玩家配置
 
-	PlayerTemplate player_template;					 // 玩家配置
+	// 敌人类型配置
+	EnemyTemplate slim_template;              // 史莱姆配置
+	EnemyTemplate king_slim_template;         // 皇家史莱姆配置
+	EnemyTemplate skeleton_template;          // 骷髅配置
+	EnemyTemplate goblin_template;            // 哥布林配置
+	EnemyTemplate goblin_priest_template;     // 哥布林祭司配置
 
-	EnemyTemplate slim_template;					 // 史莱姆配置
-	EnemyTemplate king_slim_template;				 // 皇家史莱姆配置
-	EnemyTemplate skeleton_template;				 // 骷髅配置
-	EnemyTemplate goblin_template;					 // 哥布林配置
-	EnemyTemplate goblin_priest_template;			 // 哥布林祭司配置
+	// 防御塔类型配置
+	TowerTemplate archer_template;            // 弓箭手塔配置
+	TowerTemplate axeman_template;            // 斧头兵塔配置
+	TowerTemplate gunner_template;            // 枪手塔配置
 
-	TowerTemplate archer_template;					 // 弓箭手塔配置
-	TowerTemplate axeman_template;					 // 斧头兵塔配置
-	TowerTemplate gunner_template;					 // 枪手塔配置
-
-	static constexpr double num_initial_hp = 10;	 // 初始血量
-	static constexpr double num_initial_coin = 100;	 // 初始金币
-	static constexpr double num_coin_per_prop = 10;	 // 每个道具的金币数
+	// 游戏常量配置
+	static constexpr double num_initial_hp = 10;      // 初始生命值
+	static constexpr double num_initial_coin = 100;   // 初始金币数量
+	static constexpr double num_coin_per_prop = 10;   // 每个道具价值
 
 public:
+	/**
+	 * @brief 加载关卡配置文件
+	 * @param path 关卡配置文件路径
+	 * @return 加载成功返回true，失败返回false
+	 * @details 从JSON格式的配置文件中读取并解析关卡波次信息
+	 */
 	bool loadLevelConfig(const std::string& path) 
 	{
 		// 读取文件内容
@@ -117,7 +141,12 @@ public:
 		return !wave_list.empty();
 	}
 
-	//加载游戏配置
+	/**
+	 * @brief 加载游戏全局配置
+	 * @param path 游戏配置文件路径
+	 * @return 加载成功返回true，失败返回false
+	 * @details 加载并解析包含基础配置、玩家配置、防御塔配置和敌人配置的JSON文件
+	 */
 	bool loadGameConfig(const std::string& path) 
 	{
 		// 读取文件内容
@@ -186,23 +215,41 @@ public:
 	}
 
 private:
-	// 使用智能指针包装cJSON以自动管理内存
+	/**
+	 * @brief 智能指针类型定义，用于自动管理cJSON对象的内存
+	 */
 	using JsonPtr = std::unique_ptr<cJSON, decltype(&cJSON_Delete)>;
 
-	// 创建自动删除的JSON指针
+	/**
+	 * @brief 创建管理cJSON对象的智能指针
+	 * @param json 原始cJSON指针
+	 * @return 包装后的智能指针
+	 */
 	JsonPtr makeJsonPtr(cJSON* json)
 	{
 		return JsonPtr(json, cJSON_Delete);
 	}
 
-	// 安全获取JSON对象
+	/**
+	 * @brief 安全获取JSON对象中的子对象
+	 * @param root JSON根节点
+	 * @param key 要获取的键名
+	 * @return 成功返回对应的cJSON对象指针，失败返回nullptr
+	 */
 	const cJSON* getJsonObject(const cJSON* root, const char* key) 
 	{
 		auto* obj = cJSON_GetObjectItem(root, key);
 		return (obj && obj->type == cJSON_Object) ? obj : nullptr;
 	}
 
-	// 安全获取JSON数值
+	/**
+	 * @brief 安全获取JSON中的数值
+	 * @tparam T 目标数值类型
+	 * @param json JSON对象
+	 * @param key 键名
+	 * @param value 输出参数，存储获取的值
+	 * @return 获取成功返回true，失败返回false
+	 */
 	template<typename T>
 	bool getJsonNumber(const cJSON* json, const char* key, T& value)
 	{
@@ -215,7 +262,13 @@ private:
 		return false;
 	}
 
-	// 安全获取JSON字符串
+	/**
+	 * @brief 安全获取JSON中的字符串
+	 * @param json JSON对象
+	 * @param key 键名
+	 * @param value 输出参数，存储获取的字符串
+	 * @return 获取成功返回true，失败返回false
+	 */
 	bool getJsonString(const cJSON* json, const char* key, std::string& value) 
 	{
 		if (auto item = cJSON_GetObjectItem(json, key)) {
@@ -227,7 +280,13 @@ private:
 		return false;
 	}
 
-	// 解析数值数组
+	/**
+	 * @brief 解析JSON数组中的数值序列
+	 * @tparam T 目标数组元素类型
+	 * @param array 目标数组
+	 * @param max_len 数组最大长度
+	 * @param json_array JSON数组对象
+	 */
 	template<typename T>
 	void parseNumberArray(T* array, size_t max_len, const cJSON* json_array) 
 	{
@@ -243,7 +302,12 @@ private:
 		}
 	}
 
-	// 解析敌人类型
+	/**
+	 * @brief 解析敌人类型字符串
+	 * @param str 类型字符串
+	 * @param type 输出参数，解析后的敌人类型枚举值
+	 * @return 解析成功返回true，失败返回false
+	 */
 	bool parseEnemyType(const char* str, EnemyType& type)
 	{
 		static const std::unordered_map<std::string, EnemyType> enemyTypes = {
@@ -262,7 +326,12 @@ private:
 		return false;
 	}
 
-	// 解析生成事件
+	/**
+	 * @brief 解析敌人生成事件配置
+	 * @param json_spawn_event 生成事件的JSON对象
+	 * @param spawn_event 输出参数，解析后的生成事件结构
+	 * @return 解析成功返回true，失败返回false
+	 */
 	bool parseSpawnEvent(const cJSON* json_spawn_event, Wave::SpawnEvent& spawn_event)
 	{
 		if (!json_spawn_event || json_spawn_event->type != cJSON_Object) {
@@ -285,7 +354,12 @@ private:
 		return true;
 	}
 
-	// 解析波次数据
+	/**
+	 * @brief 解析波次配置
+	 * @param json_wave 波次的JSON对象
+	 * @param wave 输出参数，解析后的波次结构
+	 * @return 解析成功返回true，失败返回false
+	 */
 	bool parseWave(const cJSON* json_wave, Wave& wave)
 	{
 		if (!json_wave || json_wave->type != cJSON_Object) {
@@ -315,7 +389,12 @@ private:
 		return !wave.spawn_event_list.empty();
 	}
 
-	// 解析基础配置
+	/**
+	 * @brief 解析基础配置模板
+	 * @param basic_template 输出参数，解析后的基础配置
+	 * @param json_root JSON根节点
+	 * @return 解析成功返回true，失败返回false
+	 */
 	bool parseBasicTemplate(BasicTemplate& basic_template, const cJSON* json_root) 
 	{
 		if (!json_root) return false;
@@ -325,7 +404,12 @@ private:
 			getJsonNumber(json_root, "window_height", basic_template.window_height);
 	}
 
-	// 解析玩家配置
+	/**
+	 * @brief 解析玩家配置模板
+	 * @param player_template 输出参数，解析后的玩家配置
+	 * @param json_root JSON根节点
+	 * @return 解析成功返回true，失败返回false
+	 */
 	bool parsePlayerTemplate(PlayerTemplate& player_template, const cJSON* json_root) 
 	{
 		if (!json_root) return false;
@@ -337,7 +421,12 @@ private:
 			getJsonNumber(json_root, "skill_damage", player_template.skill_damage);
 	}
 
-	// 解析敌人配置
+	/**
+	 * @brief 解析敌人配置模板
+	 * @param enemy_template 输出参数，解析后的敌人配置
+	 * @param json_root JSON根节点
+	 * @return 解析成功返回true，失败返回false
+	 */
 	bool parseEnemyTemplate(EnemyTemplate& enemy_template, const cJSON* json_root) 
 	{
 		if (!json_root) return false;
@@ -351,7 +440,12 @@ private:
 			getJsonNumber(json_root, "recover_intensity", enemy_template.recover_intensity);
 	}
 
-	// 解析防御塔配置
+	/**
+	 * @brief 解析防御塔配置模板
+	 * @param tower_template 输出参数，解析后的防御塔配置
+	 * @param json_root JSON根节点
+	 * @return 解析成功返回true，失败返回false
+	 */
 	bool parseTowerTemplate(TowerTemplate& tower_template, const cJSON* json_root) 
 	{
 		if (!json_root) return false;
