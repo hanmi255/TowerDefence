@@ -17,7 +17,7 @@ public:
         static auto& goblin_priest_template = ConfigManager::instance()->goblin_priest_template;
 
         static const std::vector<int> index_list_down = { 0, 1, 2, 3, 4 };
-        static const std::vector<int> index_list_up = { 5, 5, 7, 8, 9 };
+        static const std::vector<int> index_list_up = { 5, 6, 7, 8, 9 };
         static const std::vector<int> index_list_right = { 10, 11, 12, 13, 14 };
         static const std::vector<int> index_list_left = { 15, 16, 17, 18, 19 };
 
