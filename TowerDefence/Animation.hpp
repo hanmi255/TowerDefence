@@ -16,6 +16,7 @@ class Animation
 {
 public:
     /// 动画播放完成的回调函数类型
+    using PlayCallback = std::function<void()>;
 public:
     /**
      * @brief 构造函数

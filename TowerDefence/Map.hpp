@@ -20,6 +20,7 @@ class Map
 {
 public:
 	/** @brief 生成路由池类型定义，键为生成点ID，值为对应路径 */
+	using SpawnerRoutePool = std::unordered_map<int, Route>;
 
 public:
 	Map() = default;

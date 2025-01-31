@@ -15,6 +15,7 @@ class Route
 {
 public:
 	// 定义索引列表类型，用于存储路径上的点坐标
+	typedef std::vector<SDL_Point> IndexList;
 
 public:
 	Route() = default;
