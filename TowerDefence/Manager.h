@@ -1,5 +1,5 @@
 ﻿#pragma once
-
+// 
 /**
  * @brief 通用单例模式管理器模板类
  * @tparam T 需要实现单例模式的具体类型
