@@ -86,11 +86,11 @@ public:
 	PlayerTemplate player_template;            // 玩家配置
 
 	// 敌人类型配置
-	EnemyTemplate slim_template;              // 史莱姆配置
-	EnemyTemplate king_slim_template;         // 皇家史莱姆配置
-	EnemyTemplate skeleton_template;          // 骷髅配置
-	EnemyTemplate goblin_template;            // 哥布林配置
-	EnemyTemplate goblin_priest_template;     // 哥布林祭司配置
+	EnemyTemplate slime_template;              // 史莱姆配置
+	EnemyTemplate king_slime_template;         // 皇家史莱姆配置
+	EnemyTemplate skeleton_template;           // 骷髅配置
+	EnemyTemplate goblin_template;             // 哥布林配置
+	EnemyTemplate goblin_priest_template;      // 哥布林祭司配置
 
 	// 防御塔类型配置
 	TowerTemplate archer_template;            // 弓箭手塔配置
@@ -182,8 +182,8 @@ public:
 			const char* key;
 			EnemyTemplate& tmpl;
 		} enemies[] = {
-			{"slim", slim_template},
-			{"king_slim", king_slim_template},
+			{"slime", slime_template},
+			{"king_slime", king_slime_template},
 			{"skeleton", skeleton_template},
 			{"goblin", goblin_template},
 			{"goblin_priest", goblin_priest_template}
@@ -311,8 +311,8 @@ private:
 	bool parseEnemyType(const char* str, EnemyType& type)
 	{
 		static const std::unordered_map<std::string, EnemyType> enemyTypes = {
-			{"Slim", EnemyType::Slim},
-			{"KingSlim", EnemyType::KingSlim},
+			{"Slime", EnemyType::Slime},
+			{"KingSlime", EnemyType::KingSlime},
 			{"Skeleton", EnemyType::Skeleton},
 			{"Goblin", EnemyType::Goblin},
 			{"GoblinPriest", EnemyType::GoblinPriest}

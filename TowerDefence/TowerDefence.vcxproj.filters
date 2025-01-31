@@ -12,7 +12,10 @@
     <Filter Include="源文件\cJSON">
       <UniqueIdentifier>{066db782-da3b-46bb-a7b1-44520d3cc829}</UniqueIdentifier>
     </Filter>
-    <Filter Include="头文件\Manager">
+    <Filter Include="头文件\enemy">
+      <UniqueIdentifier>{a058cd16-97ba-49ee-932d-e2a0c7c87d55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\manager">
       <UniqueIdentifier>{c2070b51-583f-4623-8355-b139e6acdaea}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -26,19 +29,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game_manager.hpp">
-      <Filter>头文件\Manager</Filter>
+      <Filter>头文件\manager</Filter>
     </ClInclude>
     <ClInclude Include="config_manager.hpp">
-      <Filter>头文件\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="enemy_type.h">
-      <Filter>头文件</Filter>
+      <Filter>头文件\manager</Filter>
     </ClInclude>
     <ClInclude Include="resource_manager.hpp">
-      <Filter>头文件\Manager</Filter>
+      <Filter>头文件\manager</Filter>
     </ClInclude>
     <ClInclude Include="manager.h">
-      <Filter>头文件\Manager</Filter>
+      <Filter>头文件\manager</Filter>
     </ClInclude>
     <ClInclude Include="animation.hpp">
       <Filter>头文件</Filter>
@@ -57,6 +57,30 @@
     </ClInclude>
     <ClInclude Include="wave.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="vector2.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy_type.h">
+      <Filter>头文件\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy.hpp">
+      <Filter>头文件\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="slime_enemy.h">
+      <Filter>头文件\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="king_slime_enemy.h">
+      <Filter>头文件\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="skeleton_enemy.h">
+      <Filter>头文件\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="goblin_enemy.h">
+      <Filter>头文件\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="goblin_priest_enemy.h">
+      <Filter>头文件\enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

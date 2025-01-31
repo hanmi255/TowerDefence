@@ -15,7 +15,7 @@ struct Wave
     {
         double interval = 0;                      // 当前事件与上一个事件的时间间隔(秒)
         int spawn_point = 1;                      // 敌人的生成点编号
-        EnemyType enemy_type = EnemyType::Slim;   // 要生成的敌人类型
+        EnemyType enemy_type = EnemyType::Slime;  // 要生成的敌人类型
     };
 
     double rewards = 0;                           // 完成该波次可获得的奖励

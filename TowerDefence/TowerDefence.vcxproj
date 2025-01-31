@@ -137,14 +137,21 @@
   <ItemGroup>
     <ClInclude Include="animation.hpp" />
     <ClInclude Include="config_manager.hpp" />
+    <ClInclude Include="enemy.hpp" />
     <ClInclude Include="enemy_type.h" />
     <ClInclude Include="game_manager.hpp" />
+    <ClInclude Include="goblin_enemy.h" />
+    <ClInclude Include="goblin_priest_enemy.h" />
+    <ClInclude Include="king_slime_enemy.h" />
     <ClInclude Include="manager.h" />
     <ClInclude Include="map.hpp" />
     <ClInclude Include="resource_manager.hpp" />
     <ClInclude Include="route.hpp" />
+    <ClInclude Include="skeleton_enemy.h" />
+    <ClInclude Include="slime_enemy.h" />
     <ClInclude Include="tile.h" />
     <ClInclude Include="timer.hpp" />
+    <ClInclude Include="vector2.hpp" />
     <ClInclude Include="wave.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

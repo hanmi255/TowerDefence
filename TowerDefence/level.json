@@ -6,12 +6,12 @@
 			{
 				"interval": 1,
 				"spawn_point": 1,
-				"enemy_type": "Slim"
+				"enemy_type": "Slime"
 			},
 			{
 				"interval": 1,
 				"spawn_point": 2,
-				"enemy_type": "KingSlim"
+				"enemy_type": "KingSlime"
 			},
 			{
 				"interval": 1,
@@ -37,7 +37,7 @@
 			{
 				"interval": 3,
 				"spawn_point": 2,
-				"enemy_type": "KingSlim"
+				"enemy_type": "KingSlime"
 			}
 		]
 	}
