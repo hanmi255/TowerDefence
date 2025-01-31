@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "Manager.h"
+#include "manager.h"
 
 #include <SDL_image.h>
 #include <SDL_mixer.h>

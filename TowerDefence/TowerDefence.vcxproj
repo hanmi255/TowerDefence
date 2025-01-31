@@ -135,17 +135,17 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Animation.hpp" />
-    <ClInclude Include="ConfigManager.hpp" />
-    <ClInclude Include="EnemyType.h" />
-    <ClInclude Include="GameManager.hpp" />
-    <ClInclude Include="Manager.h" />
-    <ClInclude Include="Map.hpp" />
-    <ClInclude Include="ResourceManager.hpp" />
-    <ClInclude Include="Route.hpp" />
-    <ClInclude Include="Tile.h" />
-    <ClInclude Include="Timer.hpp" />
-    <ClInclude Include="Wave.h" />
+    <ClInclude Include="animation.hpp" />
+    <ClInclude Include="config_manager.hpp" />
+    <ClInclude Include="enemy_type.h" />
+    <ClInclude Include="game_manager.hpp" />
+    <ClInclude Include="manager.h" />
+    <ClInclude Include="map.hpp" />
+    <ClInclude Include="resource_manager.hpp" />
+    <ClInclude Include="route.hpp" />
+    <ClInclude Include="tile.h" />
+    <ClInclude Include="timer.hpp" />
+    <ClInclude Include="wave.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

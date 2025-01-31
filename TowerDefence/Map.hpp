@@ -1,7 +1,7 @@
 ﻿#pragma once
 
-#include "Tile.h"
-#include "Route.hpp"
+#include "tile.h"
+#include "route.hpp"
 
 #include <SDL.h>
 #include <string>

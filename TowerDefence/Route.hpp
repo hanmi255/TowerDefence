@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "Tile.h"
+#include "tile.h"
 
 #include <SDL.h>
 #include <vector>

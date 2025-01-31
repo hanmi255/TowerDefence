@@ -1,8 +1,8 @@
 ﻿#pragma once
 
-#include "Manager.h"
-#include "Map.hpp"
-#include "Wave.h"
+#include "manager.h"
+#include "map.hpp"
+#include "wave.h"
 
 #include <SDL.h>
 #include <string>

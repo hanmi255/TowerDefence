@@ -1,8 +1,8 @@
 ﻿#pragma once
 
-#include "Manager.h"
-#include "ConfigManager.hpp"
-#include "ResourceManager.hpp"
+#include "manager.h"
+#include "config_manager.hpp"
+#include "resource_manager.hpp"
 
 #include <SDL.h>
 #include <SDL_image.h>
