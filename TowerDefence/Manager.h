@@ -1,5 +1,5 @@
 ﻿#pragma once
-// 
+
 /**
  * @brief 通用单例模式管理器模板类
  * @tparam T 需要实现单例模式的具体类型
@@ -25,7 +25,6 @@ public:
     }
 
 private:
-    static T* manager;                               // 静态成员变量，存储单例实例指针
 
 protected:
     Manager() = default;                             // 默认构造函数，protected防止外部创建实例

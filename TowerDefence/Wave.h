@@ -2,7 +2,7 @@
 
 #include "enemy_type.h"
 #include <vector>
-//
+
 /**
  * @brief 描述一波敌人的生成配置
  */
@@ -20,5 +20,4 @@ struct Wave
 
     double rewards = 0;                           // 完成该波次可获得的奖励
     double interval = 0;                          // 与下一波的时间间隔(秒)
-    std::vector<SpawnEvent> spawn_event_list;     // 该波次包含的所有生成事件列表
 };

@@ -4,7 +4,7 @@
 
 #include <SDL.h>
 #include <vector>
-//
+
 /**
  * @brief 路径规划类，用于在瓦片地图上根据方向标记生成路径
  *
@@ -15,7 +15,6 @@ class Route
 {
 public:
 	// 定义索引列表类型，用于存储路径上的点坐标
-	typedef std::vector<SDL_Point> IndexList;
 
 public:
 	Route() = default;
