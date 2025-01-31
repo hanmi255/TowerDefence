@@ -94,6 +94,7 @@ public:
     }
 
 private:
+    double pass_time = 0.0;                     // 已经过去的时间
     double wait_time = 0.0;                     // 需要等待的时间
     bool paused = false;                        // 是否暂停
     bool shotted = false;                       // 是否已经触发

@@ -25,6 +25,7 @@ public:
     }
 
 private:
+    static T* manager;                               // 静态成员变量，存储单例实例指针
 
 protected:
     Manager() = default;                             // 默认构造函数，protected防止外部创建实例

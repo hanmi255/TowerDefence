@@ -19,6 +19,7 @@ struct Tile
     int decoration = -1;                        // 装饰物ID(-1表示无装饰)
     int special_flag = -1;                      // 特殊标记ID(-1表示无特殊标记)
 
+    bool has_tower = false;                     // 是否有防御塔
 
     Direction direction = Direction::NONE;      // 瓦片朝向(默认无方向)
 };
