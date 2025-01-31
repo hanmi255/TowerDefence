@@ -25,13 +25,22 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="manager.h">
-      <Filter>头文件\Manager</Filter>
-    </ClInclude>
     <ClInclude Include="game_manager.hpp">
       <Filter>头文件\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="tile.h">
+    <ClInclude Include="config_manager.hpp">
+      <Filter>头文件\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy_type.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="resource_manager.hpp">
+      <Filter>头文件\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="manager.h">
+      <Filter>头文件\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="animation.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="map.hpp">
@@ -40,22 +49,13 @@
     <ClInclude Include="route.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="config_manager.hpp">
-      <Filter>头文件\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="wave.h">
+    <ClInclude Include="tile.h">
       <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="enemy_type.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="resource_manager.hpp">
-      <Filter>头文件\Manager</Filter>
     </ClInclude>
     <ClInclude Include="timer.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="animation.hpp">
+    <ClInclude Include="wave.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
