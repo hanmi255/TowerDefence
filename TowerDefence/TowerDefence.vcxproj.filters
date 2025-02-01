@@ -82,5 +82,11 @@
     <ClInclude Include="goblin_priest_enemy.h">
       <Filter>头文件\enemy</Filter>
     </ClInclude>
+    <ClInclude Include="enemy_manager.hpp">
+      <Filter>头文件\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="home_manager.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -207,10 +207,10 @@ public:
 	}
 
 	/**
-	 * @brief 检查敌人是否可以移动
-	 * @return 如果敌人无效则可以移动，返回true
+	 * @brief 检查敌人是否可以移除
+	 * @return 如果敌人无效则可以移除，返回true
 	 */
-	bool canMove() const 
+	bool canRemove() const 
 	{ 
 		return !is_valid; 
 	}
