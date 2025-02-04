@@ -103,5 +103,11 @@
     <ClInclude Include="arrow_bullet.hpp">
       <Filter>头文件\bullet</Filter>
     </ClInclude>
+    <ClInclude Include="axe_bullet.hpp">
+      <Filter>头文件\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="shell_bullet.hpp">
+      <Filter>头文件\bullet</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -16,7 +16,8 @@
 #include <chrono>
 
 // 自定义删除器，用于智能指针管理SDL资源
-struct SDLDeleter {
+struct SDLDeleter 
+{
     void operator()(SDL_Window* w) const { SDL_DestroyWindow(w); }
     void operator()(SDL_Renderer* r) const { SDL_DestroyRenderer(r); }
     void operator()(SDL_Texture* t) const { SDL_DestroyTexture(t); }
@@ -25,7 +26,8 @@ struct SDLDeleter {
 /**
  * @brief 游戏管理器类，负责游戏生命周期和资源管理
  */
-class GameManager : public Manager<GameManager> {
+class GameManager : public Manager<GameManager> 
+{
     friend class Manager<GameManager>;
 
 public:
@@ -174,7 +176,7 @@ private:
     /** @brief 更新游戏状态 */
     void onUpdate(double delta_time)
     {
-        static ConfigManager* config = ConfigManager::instance();
+        static auto* config = ConfigManager::instance();
 
         if (!config->is_game_over) {
             WaveManager::instance()->onUpdate(delta_time);
@@ -185,7 +187,7 @@ private:
     /** @brief 渲染游戏画面 */
     void onRender() 
     {
-        static ConfigManager* config = ConfigManager::instance();
+        static auto* config = ConfigManager::instance();
         static SDL_Rect& rect_dst = config->rect_tile_map;
         SDL_RenderCopy(m_renderer.get(), m_tex_tile_map.get(), nullptr, &rect_dst);
 

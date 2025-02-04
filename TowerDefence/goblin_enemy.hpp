@@ -12,8 +12,8 @@ public:
     GoblinEnemy()
     {
         static const auto& texture_pool = ResourceManager::instance()->getTexturePool();
-        static SDL_Texture* tex_goblin = texture_pool.find(ResID::Tex_Goblin)->second;
-        static SDL_Texture* tex_goblin_sketch = texture_pool.find(ResID::Tex_GoblinSketch)->second;
+        static auto* tex_goblin = texture_pool.find(ResID::Tex_Goblin)->second;
+        static auto* tex_goblin_sketch = texture_pool.find(ResID::Tex_GoblinSketch)->second;
         static auto& goblin_template = ConfigManager::instance()->goblin_template;
 
         static const std::vector<int> index_list_down = { 0, 1, 2, 3, 4 };
