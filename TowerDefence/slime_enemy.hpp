@@ -12,8 +12,8 @@ public:
     SlimeEnemy()
     {
         static const auto& texture_pool = ResourceManager::instance()->getTexturePool();
-        static auto* tex_slime = texture_pool.find(ResID::Tex_Slime)->second;
-        static auto* tex_slime_sketch = texture_pool.find(ResID::Tex_SlimeSketch)->second;
+        static SDL_Texture* tex_slime = texture_pool.find(ResID::Tex_Slime)->second;
+        static SDL_Texture* tex_slime_sketch = texture_pool.find(ResID::Tex_SlimeSketch)->second;
         static auto& slime_template = ConfigManager::instance()->slime_template;
 
         static const std::vector<int> index_list_down = { 0, 1, 2, 3, 4, 5 };

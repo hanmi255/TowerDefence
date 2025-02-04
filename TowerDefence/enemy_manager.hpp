@@ -17,8 +17,7 @@
  * @brief 敌人管理器类，负责管理游戏中所有敌人单位
  * @details 继承自Manager模板类，使用单例模式实现
  */
-class EnemyManager : public Manager<EnemyManager> 
-{
+class EnemyManager : public Manager<EnemyManager> {
     friend class Manager<EnemyManager>;
 
 public:
@@ -66,7 +65,7 @@ public:
     void spawnEnemy(EnemyType type, const int index_spawn_point)
     {
         static Vector2 position_spawn;  // 敌人生成位置
-        static const auto& rect_tile_map = ConfigManager::instance()->rect_tile_map;  // 地图矩形区域
+        static const SDL_Rect& rect_tile_map = ConfigManager::instance()->rect_tile_map;  // 地图矩形区域
         static const auto& spawner_route_pool = ConfigManager::instance()->map.getSpawnerRoutePool();  // 生成点路径池
 
         const auto& itor = spawner_route_pool.find(index_spawn_point);
@@ -117,7 +116,7 @@ public:
         position_spawn.y = rect_tile_map.y + index_list[0].y * TILE_SIZE + TILE_SIZE / 2;
 
         enemy->setPosition(position_spawn);
-        enemy->setRoute(&itor->second);
+        enemy->setRoute(std::make_unique<Route>(itor->second));
 
         m_enemy_list.push_back(enemy.release());
     }
@@ -151,8 +150,8 @@ private:
     void processHomeCollision()
     {
         // 获取基地相关的静态配置
-        static const auto& index_home = ConfigManager::instance()->map.getIndexHome();
-        static const auto& rect_tile_map = ConfigManager::instance()->rect_tile_map;
+        static const SDL_Point& index_home = ConfigManager::instance()->map.getIndexHome();
+        static const SDL_Rect& rect_tile_map = ConfigManager::instance()->rect_tile_map;
         static const Vector2 position_home_tile = {
             (double)rect_tile_map.x + index_home.x * TILE_SIZE,
             (double)rect_tile_map.y + index_home.y * TILE_SIZE

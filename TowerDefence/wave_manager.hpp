@@ -13,8 +13,7 @@
  * 该类继承自Manager模板类，使用单例模式实现
  * 管理游戏中的波次进程，包括波次间隔、敌人生成等
  */
-class WaveManager : public Manager<WaveManager> 
-{
+class WaveManager : public Manager<WaveManager> {
     friend class Manager<WaveManager>;
 
 public:
@@ -30,7 +29,7 @@ public:
      */
     void onUpdate(double delta_time)
     {
-        static auto* config = ConfigManager::instance();
+        static ConfigManager* config = ConfigManager::instance();
         if (config->is_game_over) return;
 
         if (!is_wave_started)

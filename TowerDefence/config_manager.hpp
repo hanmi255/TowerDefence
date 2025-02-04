@@ -17,16 +17,14 @@
  * @brief 游戏配置管理类，负责加载和管理所有游戏相关的配置数据
  * 采用单例模式设计，继承自Manager基类
  */
-class ConfigManager : public Manager<ConfigManager> 
-{
+class ConfigManager : public Manager<ConfigManager> {
 	friend class Manager<ConfigManager>;
 
 public:
 	/**
 	 * @brief 基础游戏配置结构体
 	 */
-	struct BasicTemplate 
-	{
+	struct BasicTemplate {
 		std::string window_title = u8"Tower Defence";  // 游戏窗口标题
 		int window_width = 1280;                       // 窗口宽度
 		int window_height = 720;                       // 窗口高度
@@ -35,8 +33,7 @@ public:
 	/**
 	 * @brief 玩家角色配置结构体
 	 */
-	struct PlayerTemplate 
-	{
+	struct PlayerTemplate {
 		double speed = 3.0;						// 移动速度
 		double normal_attack_interval = 0.5;    // 普通攻击间隔时间
 		double normal_attack_damage = 0;        // 普通攻击伤害
@@ -47,8 +44,7 @@ public:
 	/**
 	 * @brief 敌人单位配置结构体
 	 */
-	struct EnemyTemplate 
-	{
+	struct EnemyTemplate {
 		double hp = 100;                 // 生命值
 		double speed = 1.0;              // 移动速度
 		double damage = 1;               // 攻击伤害
@@ -61,8 +57,7 @@ public:
 	/**
 	 * @brief 防御塔配置结构体
 	 */
-	struct TowerTemplate 
-	{
+	struct TowerTemplate {
 		double interval[10] = { 1 };        // 攻击间隔时间（各等级）
 		double damage[10] = { 25 };         // 攻击伤害（各等级）
 		double view_range[10] = { 5 };      // 攻击范围（各等级）
@@ -183,8 +178,7 @@ public:
 			return false;
 
 		// 解析敌人配置
-		struct 
-		{
+		struct {
 			const char* key;
 			EnemyTemplate& tmpl;
 		} enemies[] = {
@@ -202,8 +196,7 @@ public:
 		}
 
 		// 解析防御塔配置
-		struct 
-		{
+		struct {
 			const char* key;
 			TowerTemplate& tmpl;
 		} towers[] = {

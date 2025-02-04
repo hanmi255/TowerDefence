@@ -10,8 +10,8 @@ public:
 	KingSlimeEnemy()
 	{
 		static const auto& texture_pool = ResourceManager::instance()->getTexturePool();
-		static auto* tex_king_slime = texture_pool.find(ResID::Tex_KingSlime)->second;
-		static auto* tex_king_slime_sketch = texture_pool.find(ResID::Tex_KingSlimeSketch)->second;
+		static SDL_Texture* tex_king_slime = texture_pool.find(ResID::Tex_KingSlime)->second;
+		static SDL_Texture* tex_king_slime_sketch = texture_pool.find(ResID::Tex_KingSlimeSketch)->second;
 		static auto& king_slime_template = ConfigManager::instance()->king_slime_template;
 
 		static const std::vector<int> index_list_down = { 0, 1, 2, 3, 4, 5 };

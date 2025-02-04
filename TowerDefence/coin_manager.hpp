@@ -6,8 +6,7 @@
  * @brief 金币管理器类，负责管理游戏中的金币数量
  * @details 继承自Manager模板类，使用单例模式实现
  */
-class CoinManager : public Manager<CoinManager> 
-{
+class CoinManager : public Manager<CoinManager> {
     friend class Manager<CoinManager>;
 
 public:

@@ -104,7 +104,6 @@ class ResourceManager : public Manager<ResourceManager>
 
 	template <typename ResourceType>
 	using ResourcePool = std::unordered_map<ResID, ResourceType*>;
-
 public:
 	using TexturePool = ResourcePool<SDL_Texture>;
 	using SoundPool = ResourcePool<Mix_Chunk>;
