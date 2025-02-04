@@ -137,6 +137,7 @@
   <ItemGroup>
     <ClInclude Include="animation.hpp" />
     <ClInclude Include="arrow_bullet.hpp" />
+    <ClInclude Include="axe_bullet.hpp" />
     <ClInclude Include="bullet.hpp" />
     <ClInclude Include="coin_manager.hpp" />
     <ClInclude Include="config_manager.hpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="map.hpp" />
     <ClInclude Include="resource_manager.hpp" />
     <ClInclude Include="route.hpp" />
+    <ClInclude Include="shell_bullet.hpp" />
     <ClInclude Include="skeleton_enemy.hpp" />
     <ClInclude Include="slime_enemy.hpp" />
     <ClInclude Include="tile.hpp" />

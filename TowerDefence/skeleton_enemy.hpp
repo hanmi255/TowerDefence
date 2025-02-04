@@ -12,8 +12,8 @@ public:
     SkeletonEnemy()
     {
         static const auto& texture_pool = ResourceManager::instance()->getTexturePool();
-        static SDL_Texture* tex_skeleton = texture_pool.find(ResID::Tex_Skeleton)->second;
-        static SDL_Texture* tex_skeleton_sketch = texture_pool.find(ResID::Tex_SkeletonSketch)->second;
+        static auto* tex_skeleton = texture_pool.find(ResID::Tex_Skeleton)->second;
+        static auto* tex_skeleton_sketch = texture_pool.find(ResID::Tex_SkeletonSketch)->second;
         static auto& skeleton_template = ConfigManager::instance()->skeleton_template;
 
         static const std::vector<int> index_list_down = { 0, 1, 2, 3, 4 };

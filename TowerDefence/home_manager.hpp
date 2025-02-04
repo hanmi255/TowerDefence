@@ -8,7 +8,8 @@
  * @brief 家园管理器类，负责处理基地血量相关的逻辑
  * @details 继承自Manager单例模板类，管理基地的生命值系统
  */
-class HomeManager : public Manager<HomeManager> {
+class HomeManager : public Manager<HomeManager> 
+{
     friend class Manager<HomeManager>;
 
 public:

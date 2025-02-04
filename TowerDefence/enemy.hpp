@@ -193,9 +193,9 @@ public:
 	 *
 	 * 设置新路径并刷新目标位置
 	 */
-	void setRoute(std::unique_ptr<Route> route)
+	void setRoute(const Route* route)
 	{
-		this->route = std::move(route);
+		this->route = std::make_unique<Route>(*route);
 
 		refreshPositionTarget();
 	}

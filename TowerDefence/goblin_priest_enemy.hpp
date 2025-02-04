@@ -12,8 +12,8 @@ public:
     GoblinPriestEnemy()
     {
         static const auto& texture_pool = ResourceManager::instance()->getTexturePool();
-        static SDL_Texture* tex_goblin_priest = texture_pool.find(ResID::Tex_GoblinPriest)->second;
-        static SDL_Texture* tex_goblin_priest_sketch = texture_pool.find(ResID::Tex_GoblinPriestSketch)->second;
+        static auto* tex_goblin_priest = texture_pool.find(ResID::Tex_GoblinPriest)->second;
+        static auto* tex_goblin_priest_sketch = texture_pool.find(ResID::Tex_GoblinPriestSketch)->second;
         static auto& goblin_priest_template = ConfigManager::instance()->goblin_priest_template;
 
         static const std::vector<int> index_list_down = { 0, 1, 2, 3, 4 };
