@@ -8,6 +8,7 @@
 
 #include <memory>
 #include <functional>
+#include <iostream>
 
 /**
  * @brief 游戏中的敌人类，实现敌人的移动、动画、状态管理等功能
@@ -23,6 +24,7 @@ class Enemy
 public:
 	/** 技能回调函数类型定义 */
 	using SkillCallback = std::function<void(Enemy&)>;
+
 public:
 	/**
 	 * @brief 构造函数，初始化定时器和动画系统
@@ -72,15 +74,17 @@ public:
 		velocity.y = direction.y * speed * TILE_SIZE;
 
 		bool is_show_x_anim = abs(velocity.x) >= abs(velocity.y);
-		anim_current = std::make_unique<Animation>(
-			is_show_x_anim
-			? (velocity.x > 0
-				? (is_show_sketch ? &anim_right_sketch : &anim_right)
-				: (is_show_sketch ? &anim_left_sketch : &anim_left))
-			: (velocity.y > 0
-				? (is_show_sketch ? &anim_down_sketch : &anim_down)
-				: (is_show_sketch ? &anim_up_sketch : &anim_up))
-		);
+
+		if (is_show_x_anim) {
+			anim_current = (velocity.x > 0)
+				? (is_show_sketch ? std::make_unique<Animation>(anim_right_sketch) : std::make_unique<Animation>(anim_right))
+				: (is_show_sketch ? std::make_unique<Animation>(anim_left_sketch) : std::make_unique<Animation>(anim_left));
+		}
+		else {
+			anim_current = (velocity.y > 0)
+				? (is_show_sketch ? std::make_unique<Animation>(anim_down_sketch) : std::make_unique<Animation>(anim_down))
+				: (is_show_sketch ? std::make_unique<Animation>(anim_up_sketch) : std::make_unique<Animation>(anim_up));
+		}
 
 		anim_current->onUpdate(deltaTime);
 	}
@@ -97,8 +101,8 @@ public:
 	{
 		static SDL_Point point;
 		static SDL_Rect rect;
-		static const Vector2 size_hp_bar = { 40, 8 };
 		static const int offset_y = 2;
+		static const Vector2 size_hp_bar = { 40, 8 };
 		static const SDL_Color color_border = { 116, 185, 124, 255 };
 		static const SDL_Color color_content = { 226, 255, 194, 255 };
 
@@ -135,7 +139,7 @@ public:
 	 *
 	 * 增加生命值但不超过最大生命值上限
 	 */
-	void increseHp(double value)
+	void increaseHP(double value)
 	{
 		hp += value;
 		if (hp > max_hp)
@@ -149,7 +153,7 @@ public:
 	 * 减少生命值并检查死亡状态
 	 * 同时触发受击特效显示
 	 */
-	void decreaseHp(double value)
+	void decreaseHP(double value)
 	{
 		hp -= value;
 		if (hp <= 0) {
@@ -296,45 +300,45 @@ private:
 	}
 
 protected:
-	Vector2 size;                  // 敌人尺寸
-	Timer timer_skill;             // 技能计时器
+	Vector2 size;								// 敌人尺寸
+	Timer timer_skill;							// 技能计时器
 
-	Animation anim_up;             // 向上移动动画
-	Animation anim_down;           // 向下移动动画
-	Animation anim_left;           // 向左移动动画
-	Animation anim_right;          // 向右移动动画
-	Animation anim_up_sketch;      // 向上移动受击动画
-	Animation anim_down_sketch;    // 向下移动受击动画
-	Animation anim_left_sketch;    // 向左移动受击动画
-	Animation anim_right_sketch;   // 向右移动受击动画
+	Animation anim_up;							// 向上移动动画
+	Animation anim_down;						// 向下移动动画
+	Animation anim_left;						// 向左移动动画
+	Animation anim_right;						// 向右移动动画
+	Animation anim_up_sketch;					// 向上移动受击动画
+	Animation anim_down_sketch;					// 向下移动受击动画
+	Animation anim_left_sketch;					// 向左移动受击动画
+	Animation anim_right_sketch;				// 向右移动受击动画
 
-	double hp = 0;                 // 当前生命值
-	double max_hp = 0;             // 最大生命值
-	double speed = 0;              // 当前速度
-	double max_speed = 0;          // 最大速度
-	double damage = 0;             // 伤害值
-	double reward_ratio = 0;       // 奖励系数
-	double recover_interval = 0;    // 恢复间隔
-	double recover_range = 0;       // 恢复范围
-	double recover_intensity = 0;   // 恢复强度
+	double hp = 0;								// 当前生命值
+	double max_hp = 0;							// 最大生命值
+	double speed = 0;							// 当前速度
+	double max_speed = 0;						// 最大速度
+	double damage = 0;							// 伤害值
+	double reward_ratio = 0;					// 奖励系数
+	double recover_interval = 0;				// 恢复间隔
+	double recover_range = 0;					// 恢复范围
+	double recover_intensity = 0;				// 恢复强度
 
 private:
-	Vector2 position;              // 当前位置
-	Vector2 velocity;              // 当前速度向量
-	Vector2 direction;             // 移动方向
+	Vector2 position;							// 当前位置
+	Vector2 velocity;							// 当前速度向量				
+	Vector2 direction;							// 移动方向
 
-	bool is_valid = true;          // 敌人是否有效
+	bool is_valid = true;						// 敌人是否有效
 
-	Timer timer_sketch;            // 受击特效计时器
-	bool is_show_sketch = false;   // 是否显示受击特效
+	Timer timer_sketch;							// 受击特效计时器
+	bool is_show_sketch = false;				// 是否显示受击特效
 
-	std::unique_ptr<Animation> anim_current;  // 当前播放的动画
+	std::unique_ptr<Animation> anim_current;	// 当前播放的动画
 
-	SkillCallback on_skill_released;  // 技能释放回调
+	SkillCallback on_skill_released;			// 技能释放回调
 
-	Timer timer_restore_speed;      // 速度恢复计时器
+	Timer timer_restore_speed;					// 速度恢复计时器
 
-	std::unique_ptr<Route> route;   // 移动路径
-	int index_target = 0;           // 当前目标点索引
-	Vector2 target_position;        // 目标位置
+	std::unique_ptr<Route> route;				// 移动路径
+	int index_target = 0;						// 当前目标点索引
+	Vector2 target_position;					// 目标位置
 };

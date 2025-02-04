@@ -17,6 +17,7 @@ class Animation
 public:
     /// 动画播放完成的回调函数类型
     using PlayCallback = std::function<void()>;
+
 public:
     /**
      * @brief 构造函数
@@ -27,8 +28,7 @@ public:
     {
         m_timer.setOneShot(false);
         m_timer.setOnTimeOut(
-            [&]()
-            {
+            [&]() {
                 index_frame++;
                 if (index_frame >= rect_src_list.size()) {
                     index_frame = is_loop ? 0 : rect_src_list.size() - 1;
@@ -39,6 +39,35 @@ public:
             }
         );
     }
+
+    /**
+     * @brief 拷贝构造函数
+     * @param other 被拷贝的源对象
+     */
+    Animation(const Animation& other)
+        : m_timer(other.m_timer),
+        is_loop(other.is_loop),
+        index_frame(other.index_frame),
+        on_finished(other.on_finished),
+        texture(other.texture),
+        rect_src_list(other.rect_src_list),
+        width_frame(other.width_frame),
+        height_frame(other.height_frame)
+    {
+        // 重新绑定回调，确保操作当前对象的成员
+        m_timer.setOnTimeOut(
+            [this]() {
+            index_frame++;
+            if (index_frame >= rect_src_list.size()) {
+                index_frame = is_loop ? 0 : rect_src_list.size() - 1;
+                if (!is_loop && on_finished) {
+                    on_finished();
+                }
+            }
+            });
+    }
+
+
     ~Animation() = default;
 
     /**

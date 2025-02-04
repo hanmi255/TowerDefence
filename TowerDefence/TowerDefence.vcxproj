@@ -136,25 +136,29 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="animation.hpp" />
+    <ClInclude Include="arrow_bullet.hpp" />
+    <ClInclude Include="bullet.hpp" />
+    <ClInclude Include="coin_manager.hpp" />
     <ClInclude Include="config_manager.hpp" />
     <ClInclude Include="enemy.hpp" />
     <ClInclude Include="enemy_manager.hpp" />
-    <ClInclude Include="enemy_type.h" />
+    <ClInclude Include="enemy_type.hpp" />
     <ClInclude Include="game_manager.hpp" />
-    <ClInclude Include="goblin_enemy.h" />
-    <ClInclude Include="goblin_priest_enemy.h" />
+    <ClInclude Include="goblin_enemy.hpp" />
+    <ClInclude Include="goblin_priest_enemy.hpp" />
     <ClInclude Include="home_manager.hpp" />
-    <ClInclude Include="king_slime_enemy.h" />
-    <ClInclude Include="manager.h" />
+    <ClInclude Include="king_slime_enemy.hpp" />
+    <ClInclude Include="manager.hpp" />
     <ClInclude Include="map.hpp" />
     <ClInclude Include="resource_manager.hpp" />
     <ClInclude Include="route.hpp" />
-    <ClInclude Include="skeleton_enemy.h" />
-    <ClInclude Include="slime_enemy.h" />
-    <ClInclude Include="tile.h" />
+    <ClInclude Include="skeleton_enemy.hpp" />
+    <ClInclude Include="slime_enemy.hpp" />
+    <ClInclude Include="tile.hpp" />
     <ClInclude Include="timer.hpp" />
     <ClInclude Include="vector2.hpp" />
-    <ClInclude Include="wave.h" />
+    <ClInclude Include="wave.hpp" />
+    <ClInclude Include="wave_manager.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "tile.h"
+#include "tile.hpp"
 
 #include <SDL.h>
 #include <vector>
@@ -15,7 +15,7 @@ class Route
 {
 public:
 	// 定义索引列表类型，用于存储路径上的点坐标
-	typedef std::vector<SDL_Point> IndexList;
+	using IndexList = std::vector<SDL_Point>;
 
 public:
 	Route() = default;
@@ -54,21 +54,21 @@ public:
 			if (current_tile.special_flag == 0)
 				break;
 			switch (current_tile.direction) {
-				case Tile::Direction::UP:
-					index_next.y--;
-					break;
-				case Tile::Direction::DOWN:
-					index_next.y++;
-					break;
-				case Tile::Direction::LEFT:
-					index_next.x--;
-					break;
-				case Tile::Direction::RIGHT:
-					index_next.x++;
-					break;
-				default:
-					is_next_direction_valid = false;
-					break;
+			case Tile::Direction::UP:
+				index_next.y--;
+				break;
+			case Tile::Direction::DOWN:
+				index_next.y++;
+				break;
+			case Tile::Direction::LEFT:
+				index_next.x--;
+				break;
+			case Tile::Direction::RIGHT:
+				index_next.x++;
+				break;
+			default:
+				is_next_direction_valid = false;
+				break;
 			}
 
 			if (!is_next_direction_valid)										// 方向无效

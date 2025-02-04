@@ -68,4 +68,3 @@ public:
 
     ~SkeletonEnemy() = default;
 };
-

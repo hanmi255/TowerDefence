@@ -68,4 +68,3 @@ public:
 
     ~GoblinPriestEnemy() = default;
 };
-

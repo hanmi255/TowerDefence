@@ -18,6 +18,9 @@
     <Filter Include="头文件\manager">
       <UniqueIdentifier>{c2070b51-583f-4623-8355-b139e6acdaea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\bullet">
+      <UniqueIdentifier>{4f1d667b-a6a4-4f8c-8ad6-61ea5dd18011}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -37,7 +40,7 @@
     <ClInclude Include="resource_manager.hpp">
       <Filter>头文件\manager</Filter>
     </ClInclude>
-    <ClInclude Include="manager.h">
+    <ClInclude Include="manager.hpp">
       <Filter>头文件\manager</Filter>
     </ClInclude>
     <ClInclude Include="animation.hpp">
@@ -49,44 +52,56 @@
     <ClInclude Include="route.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="tile.h">
+    <ClInclude Include="tile.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="timer.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="wave.h">
+    <ClInclude Include="wave.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="vector2.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="enemy_type.h">
+    <ClInclude Include="enemy_type.hpp">
       <Filter>头文件\enemy</Filter>
     </ClInclude>
     <ClInclude Include="enemy.hpp">
       <Filter>头文件\enemy</Filter>
     </ClInclude>
-    <ClInclude Include="slime_enemy.h">
+    <ClInclude Include="slime_enemy.hpp">
       <Filter>头文件\enemy</Filter>
     </ClInclude>
-    <ClInclude Include="king_slime_enemy.h">
+    <ClInclude Include="king_slime_enemy.hpp">
       <Filter>头文件\enemy</Filter>
     </ClInclude>
-    <ClInclude Include="skeleton_enemy.h">
+    <ClInclude Include="skeleton_enemy.hpp">
       <Filter>头文件\enemy</Filter>
     </ClInclude>
-    <ClInclude Include="goblin_enemy.h">
+    <ClInclude Include="goblin_enemy.hpp">
       <Filter>头文件\enemy</Filter>
     </ClInclude>
-    <ClInclude Include="goblin_priest_enemy.h">
+    <ClInclude Include="goblin_priest_enemy.hpp">
       <Filter>头文件\enemy</Filter>
     </ClInclude>
     <ClInclude Include="enemy_manager.hpp">
       <Filter>头文件\manager</Filter>
     </ClInclude>
     <ClInclude Include="home_manager.hpp">
-      <Filter>头文件</Filter>
+      <Filter>头文件\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="wave_manager.hpp">
+      <Filter>头文件\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="coin_manager.hpp">
+      <Filter>头文件\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="bullet.hpp">
+      <Filter>头文件\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="arrow_bullet.hpp">
+      <Filter>头文件\bullet</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

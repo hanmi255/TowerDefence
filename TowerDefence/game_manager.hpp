@@ -1,7 +1,9 @@
 ﻿#pragma once
 
-#include "manager.h"
+#include "manager.hpp"
 #include "config_manager.hpp"
+#include "enemy_manager.hpp"
+#include "wave_manager.hpp"
 #include "resource_manager.hpp"
 
 #include <SDL.h>
@@ -172,6 +174,12 @@ private:
     /** @brief 更新游戏状态 */
     void onUpdate(double delta_time)
     {
+        static ConfigManager* config = ConfigManager::instance();
+
+        if (!config->is_game_over) {
+            WaveManager::instance()->onUpdate(delta_time);
+            EnemyManager::instance()->onUpdate(delta_time);
+        }
     }
 
     /** @brief 渲染游戏画面 */
@@ -180,6 +188,8 @@ private:
         static ConfigManager* config = ConfigManager::instance();
         static SDL_Rect& rect_dst = config->rect_tile_map;
         SDL_RenderCopy(m_renderer.get(), m_tex_tile_map.get(), nullptr, &rect_dst);
+
+        EnemyManager::instance()->onRender(m_renderer.get());
     }
 
     /** @brief 生成瓦片地图纹理 */
