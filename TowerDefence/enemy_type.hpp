@@ -1,5 +1,8 @@
 ﻿#pragma once
 
+/**
+ * @brief 敌人类型枚举
+ */
 enum class EnemyType
 {
 	Slime,			// 史莱姆

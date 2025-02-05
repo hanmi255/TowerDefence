@@ -136,17 +136,23 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="animation.hpp" />
+    <ClInclude Include="archer_tower.hpp" />
     <ClInclude Include="arrow_bullet.hpp" />
+    <ClInclude Include="axeman_tower.hpp" />
     <ClInclude Include="axe_bullet.hpp" />
     <ClInclude Include="bullet.hpp" />
+    <ClInclude Include="bullet_manager.hpp" />
+    <ClInclude Include="bullet_type.hpp" />
     <ClInclude Include="coin_manager.hpp" />
     <ClInclude Include="config_manager.hpp" />
     <ClInclude Include="enemy.hpp" />
     <ClInclude Include="enemy_manager.hpp" />
     <ClInclude Include="enemy_type.hpp" />
+    <ClInclude Include="facing.hpp" />
     <ClInclude Include="game_manager.hpp" />
     <ClInclude Include="goblin_enemy.hpp" />
     <ClInclude Include="goblin_priest_enemy.hpp" />
+    <ClInclude Include="gunner_tower.hpp" />
     <ClInclude Include="home_manager.hpp" />
     <ClInclude Include="king_slime_enemy.hpp" />
     <ClInclude Include="manager.hpp" />
@@ -158,6 +164,9 @@
     <ClInclude Include="slime_enemy.hpp" />
     <ClInclude Include="tile.hpp" />
     <ClInclude Include="timer.hpp" />
+    <ClInclude Include="tower.hpp" />
+    <ClInclude Include="tower_manager.hpp" />
+    <ClInclude Include="tower_type.hpp" />
     <ClInclude Include="vector2.hpp" />
     <ClInclude Include="wave.hpp" />
     <ClInclude Include="wave_manager.hpp" />

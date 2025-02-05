@@ -131,6 +131,15 @@ public:
         return m_enemy_list.empty();
     }
 
+    /**
+     * @brief 获取敌人列表
+     * @return EnemyList& 敌人列表引用
+     */
+    EnemyManager::EnemyList& getEnemyList()
+    {
+        return m_enemy_list;
+    }
+
 protected:
     EnemyManager() = default;
     ~EnemyManager()
@@ -189,7 +198,8 @@ private:
      */
     void removeInvaliedEnemy()
     {
-        m_enemy_list.erase(std::remove_if(m_enemy_list.begin(), m_enemy_list.end(),
+        m_enemy_list.erase(std::remove_if(
+            m_enemy_list.begin(), m_enemy_list.end(),
             [](const Enemy* enemy) { 
                 bool deletable = enemy->canRemove();
                 if (deletable) 

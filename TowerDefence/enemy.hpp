@@ -300,6 +300,25 @@ private:
 	}
 
 protected:
+	/**
+	 * @brief 设置动画
+	 * @param anim 动画对象
+	 * @param texture 动画纹理
+	 * @param num_h 动画横向帧数
+	 * @param num_v 动画纵向帧数
+	 * @param index_list 动画帧索引列表
+	 * @param interval 动画播放间隔
+	 *
+	 * 设置动画的播放间隔、贴图、帧索引列表、循环播放等属性
+	 */
+	void setAnimation(Animation& anim, SDL_Texture* texture, int num_h, int num_v, const std::vector<int>& index_list, double interval)
+	{
+		anim.setLoop(true);
+		anim.setInterval(interval);
+		anim.setFrameData(texture, num_h, num_v, index_list);
+	}
+
+protected:
 	Vector2 size;								// 敌人尺寸
 	Timer timer_skill;							// 技能计时器
 

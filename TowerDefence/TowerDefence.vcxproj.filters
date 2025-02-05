@@ -21,6 +21,9 @@
     <Filter Include="头文件\bullet">
       <UniqueIdentifier>{4f1d667b-a6a4-4f8c-8ad6-61ea5dd18011}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\tower">
+      <UniqueIdentifier>{952ab9f4-327a-478d-8766-1bb09654292b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -108,6 +111,33 @@
     </ClInclude>
     <ClInclude Include="shell_bullet.hpp">
       <Filter>头文件\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="tower.hpp">
+      <Filter>头文件\tower</Filter>
+    </ClInclude>
+    <ClInclude Include="tower_type.hpp">
+      <Filter>头文件\tower</Filter>
+    </ClInclude>
+    <ClInclude Include="bullet_manager.hpp">
+      <Filter>头文件\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="bullet_type.hpp">
+      <Filter>头文件\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="facing.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="archer_tower.hpp">
+      <Filter>头文件\tower</Filter>
+    </ClInclude>
+    <ClInclude Include="axeman_tower.hpp">
+      <Filter>头文件\tower</Filter>
+    </ClInclude>
+    <ClInclude Include="gunner_tower.hpp">
+      <Filter>头文件\tower</Filter>
+    </ClInclude>
+    <ClInclude Include="tower_manager.hpp">
+      <Filter>头文件\manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
