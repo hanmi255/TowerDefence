@@ -116,28 +116,28 @@ protected:
 		anim.setFrameData(texture, num_h, num_v, index_list);
 	}
 protected:
-	Vector2 size;                    // 防御塔的大小
+	Vector2 size;								 // 防御塔的大小
 
-	Animation anim_idle_up;          // 向上静止动画
-	Animation anim_idle_down;        // 向下静止动画
-	Animation anim_idle_left;        // 向左静止动画
-	Animation anim_idle_right;       // 向右静止动画
+	Animation anim_idle_up;						 // 向上静止动画
+	Animation anim_idle_down;					 // 向下静止动画
+	Animation anim_idle_left;					 // 向左静止动画
+	Animation anim_idle_right;					 // 向右静止动画
 
-	Animation anim_fire_up;          // 向上开火动画
-	Animation anim_fire_down;        // 向下开火动画
-	Animation anim_fire_left;        // 向左开火动画
-	Animation anim_fire_right;       // 向右开火动画
+	Animation anim_fire_up;						 // 向上开火动画
+	Animation anim_fire_down;					 // 向下开火动画
+	Animation anim_fire_left;					 // 向左开火动画
+	Animation anim_fire_right;					 // 向右开火动画
 
-	TowerType tower_type;           // 防御塔类型
-	double fire_speed;              // 射击速度
-	BulletType bullet_type;         // 子弹类型
+	TowerType tower_type;						 // 防御塔类型
+	double fire_speed;							 // 射击速度
+	BulletType bullet_type;						 // 子弹类型
 
 private:
-	Timer timer_fire;               // 开火计时器
-	Vector2 position;               // 防御塔位置
-	bool can_fire;                  // 是否可以开火
-	Facing facing;                  // 朝向
-	Animation* anim_current = &anim_idle_right; // 当前播放的动画
+	Timer timer_fire;							 // 开火计时器
+	Vector2 position;							 // 防御塔位置
+	bool can_fire;								 // 是否可以开火
+	Facing facing;								 // 朝向
+	Animation* anim_current = &anim_idle_right;  // 当前播放的动画
 
 private:
 	/**
@@ -207,11 +207,11 @@ private:
 	 *
 	 * 在视野范围内寻找最接近终点的敌人作为攻击目标
 	 */
-	std::unique_ptr<Enemy> findTargetEnemy() const
+	Enemy* findTargetEnemy() const
 	{
 		double process = -1.0;
 		double view_range = 0.0;
-		std::unique_ptr<Enemy> target_enemy = nullptr;
+		Enemy* target_enemy = nullptr;
 
 		static auto* config = ConfigManager::instance();
 
@@ -233,7 +233,7 @@ private:
 			if ((enemy->getPosition() - position).length() <= view_range * TILE_SIZE) {
 				double new_process = enemy->getRouteProcess();
 				if (new_process > process) {
-					target_enemy = std::make_unique<Enemy>(*enemy);
+					target_enemy = enemy;
 					process = new_process;
 				}
 			}

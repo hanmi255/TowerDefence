@@ -29,7 +29,7 @@ public:
 	 */
 	void onUpdate(double delta_time)
 	{
-		for (auto& bullet : m_bullet_list) {
+		for (auto* bullet : m_bullet_list) {
 			bullet->onUpdate(delta_time);
 		}
 
@@ -50,7 +50,7 @@ public:
 	 */
 	void onRender(SDL_Renderer* renderer)
 	{
-		for (auto& bullet : m_bullet_list) {
+		for (auto* bullet : m_bullet_list) {
 			bullet->onRender(renderer);
 		}
 	}
@@ -74,7 +74,7 @@ public:
 	 */
 	void fireBullet(BulletType type, const Vector2& position, const Vector2& velocity, double damage)
 	{
-		std::unique_ptr<Bullet> bullet;
+		std::unique_ptr<Bullet> bullet = nullptr;
 		switch (type) {
 		case BulletType::Arrow:
 			bullet = std::make_unique<ArrowBullet>();

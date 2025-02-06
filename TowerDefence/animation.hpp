@@ -32,9 +32,8 @@ public:
                 index_frame++;
                 if (index_frame >= rect_src_list.size()) {
                     index_frame = is_loop ? 0 : rect_src_list.size() - 1;
-                    if (!is_loop && on_finished) {
+                    if (!is_loop && on_finished) 
                         on_finished();
-                    }
                 }
             }
         );

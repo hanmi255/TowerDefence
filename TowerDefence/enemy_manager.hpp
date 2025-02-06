@@ -34,7 +34,7 @@ public:
     void onUpdate(double delta_time)
     {
         // 更新每个敌人的状态
-        for (auto& enemy : m_enemy_list) {
+        for (auto* enemy : m_enemy_list) {
             enemy->onUpdate(delta_time);
         }
 
@@ -49,7 +49,7 @@ public:
      */
     void onRender(SDL_Renderer* renderer)
     {
-        for (auto& enemy : m_enemy_list) {
+        for (auto* enemy : m_enemy_list) {
             enemy->onRender(renderer);
         }
     }
@@ -74,7 +74,7 @@ public:
         const auto& itor = spawner_route_pool.find(index_spawn_point);
         if (itor == spawner_route_pool.end()) return;
 
-        std::unique_ptr<Enemy> enemy;
+        std::unique_ptr<Enemy> enemy = nullptr;
         switch (type) {
         case EnemyType::Slime:
             enemy = std::make_unique<SlimeEnemy>();
@@ -98,18 +98,18 @@ public:
 
         // 设置敌人的技能释放回调，处理治疗范围效果
         enemy->setOnSkillReleased(
-            [&](Enemy& enemy_src) {
-                double recover_radius = enemy_src.getRecoverRadius();
+            [&](Enemy* enemy_src) {
+                double recover_radius = enemy_src->getRecoverRadius();
                 if (recover_radius < 0) return;
 
-                const Vector2 position_src = enemy_src.getPosition();
-                for (auto& enemy_dst : m_enemy_list) {
-                    if (enemy_dst == &enemy_src) continue;
+                const Vector2 position_src = enemy_src->getPosition();
+                for (auto* enemy_dst : m_enemy_list) {
+                    if (enemy_dst == enemy_src) continue;
 
                     const Vector2& position_dst = enemy_dst->getPosition();
                     double distance = (position_dst - position_src).length();
                     if (distance <= recover_radius)
-                        enemy_dst->increaseHP(enemy_src.getRecoverIntensity());
+                        enemy_dst->increaseHP(enemy_src->getRecoverIntensity());
                 }
             });
 
@@ -146,7 +146,7 @@ protected:
     EnemyManager() = default;
     ~EnemyManager()
     {
-        for (auto& enemy : m_enemy_list) {
+        for (auto* enemy : m_enemy_list) {
             delete enemy;
         }
     }
@@ -170,7 +170,7 @@ private:
         };
 
         // 检测每个敌人与基地的碰撞
-        for (auto& enemy : m_enemy_list) {
+        for (auto* enemy : m_enemy_list) {
             if (enemy->canRemove()) continue;
 
             const Vector2& position_enemy = enemy->getPosition();
@@ -251,6 +251,12 @@ private:
             }), m_enemy_list.end());
     }
 
+    /**
+     * @brief 尝试生成金币道具
+     * @param position 道具生成位置
+     * @param ratio 道具生成概率
+     * @details 随机生成一个0-1之间的浮点数，如果小于等于ratio，则生成一个金币道具
+     */
     void trySpawnCoinProp(const Vector2& position, double ratio)
     {
         static auto* coin = CoinManager::instance();

@@ -39,7 +39,7 @@ public:
      */
     void setOneShot(bool one_shot)
     {
-        this->one_shot = one_shot;
+        this->one_shot = false;
     }
 
     /**
@@ -81,9 +81,9 @@ public:
     void onUpdate(double delta_time)
     {
         if (paused)	return;
+
         pass_time += delta_time;
-        if (pass_time >= wait_time)
-        {
+        if (pass_time >= wait_time) {
             bool can_shot = (!one_shot || (one_shot && !shotted));
             shotted = true;
             if (can_shot && onTimeOut)
@@ -94,10 +94,10 @@ public:
     }
 
 private:
-    double pass_time = 0.0;                     // 已经过去的时间
-    double wait_time = 0.0;                     // 需要等待的时间
-    bool paused = false;                        // 是否暂停
-    bool shotted = false;                       // 是否已经触发
-    bool one_shot = false;                      // 是否为单次触发模式
-    std::function<void()> onTimeOut = nullptr;  // 超时回调函数
+    double pass_time = 0.0;           // 已经过去的时间
+    double wait_time = 0.0;           // 需要等待的时间
+    bool paused = false;              // 是否暂停
+    bool shotted = false;             // 是否已经触发
+    bool one_shot = false;            // 是否为单次触发模式
+    std::function<void()> onTimeOut;  // 超时回调函数
 };

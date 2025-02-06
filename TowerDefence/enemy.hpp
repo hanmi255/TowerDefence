@@ -23,7 +23,7 @@ class Enemy
 {
 public:
 	/** 技能回调函数类型定义 */
-	using SkillCallback = std::function<void(Enemy&)>;
+	using SkillCallback = std::function<void(Enemy* enemy)>;
 
 public:
 	/**
@@ -32,31 +32,7 @@ public:
 	Enemy()
 	{
 		timer_skill.setOneShot(false);
-		timer_skill.setOnTimeOut(std::bind(&Enemy::on_skill_released, this));
-
-		timer_sketch.setOneShot(true);
-		timer_sketch.setWaitTime(0.075);
-		timer_sketch.setOnTimeOut([&]() { is_show_sketch = false; });
-
-		timer_restore_speed.setOneShot(true);
-		timer_sketch.setOnTimeOut([&]() { speed = max_speed; });
-	}
-
-	/**
-	 * @brief 拷贝构造函数
-	 * @param other 要拷贝的敌人
-	 */
-	Enemy(const Enemy& other)
-		: size(other.size), hp(other.hp), max_hp(other.max_hp), speed(other.speed),
-		max_speed(other.max_speed), damage(other.damage), reward_ratio(other.reward_ratio),
-		recover_interval(other.recover_interval), recover_range(other.recover_range),
-		recover_intensity(other.recover_intensity), position(other.position), velocity(other.velocity),
-		direction(other.direction), is_valid(other.is_valid), is_show_sketch(other.is_show_sketch),
-		anim_current(other.anim_current ? anim_current : nullptr),
-		route(other.route ? std::make_unique<Route>(*other.route) : nullptr) 
-	{
-		timer_skill.setOneShot(false);
-		timer_skill.setOnTimeOut(std::bind(&Enemy::on_skill_released, this));
+		timer_skill.setOnTimeOut([&]() { on_skill_released(this); });
 
 		timer_sketch.setOneShot(true);
 		timer_sketch.setWaitTime(0.075);
@@ -180,6 +156,7 @@ public:
 	void decreaseHP(double value)
 	{
 		hp -= value;
+
 		if (hp <= 0) {
 			hp = 0;
 			is_valid = false;
@@ -375,7 +352,7 @@ private:
 	Timer timer_sketch;							// 受击特效计时器
 	bool is_show_sketch = false;				// 是否显示受击特效
 
-	Animation* anim_current;					// 当前播放的动画
+	Animation* anim_current = nullptr;			// 当前播放的动画
 
 	SkillCallback on_skill_released;			// 技能释放回调
 
