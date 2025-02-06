@@ -30,10 +30,10 @@ public:
         static auto& skeleton_template = ConfigManager::instance()->skeleton_template;
 
         // 定义四个方向的动画帧索引
-        static const std::vector<int> index_list_down = { 0, 1, 2, 3, 4 };
         static const std::vector<int> index_list_up = { 5, 6, 7, 8, 9 };
-        static const std::vector<int> index_list_right = { 10, 11, 12, 13, 14 };
+        static const std::vector<int> index_list_down = { 0, 1, 2, 3, 4 };
         static const std::vector<int> index_list_left = { 15, 16, 17, 18, 19 };
+        static const std::vector<int> index_list_right = { 10, 11, 12, 13, 14 };
 
         // 设置普通纹理的四向动画
         setAnimation(anim_up, tex_skeleton, 5, 4, index_list_up, 0.15);

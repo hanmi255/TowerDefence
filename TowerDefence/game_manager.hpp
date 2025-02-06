@@ -1,10 +1,12 @@
 ﻿#pragma once
 
 #include "manager.hpp"
+#include "resource_manager.hpp"
 #include "config_manager.hpp"
 #include "enemy_manager.hpp"
 #include "wave_manager.hpp"
-#include "resource_manager.hpp"
+#include "tower_manager.hpp"
+#include "bullet_manager.hpp"
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -34,6 +36,8 @@ public:
     /** @brief 运行游戏主循环 */
     int run(int argc, char** argv) 
     {
+        TowerManager::instance()->placeTower(TowerType::Archer, { 5, 0 });
+
         using clock = std::chrono::high_resolution_clock;
         constexpr double TARGET_FPS = 60.0;
         constexpr double FRAME_TIME = 1.0 / TARGET_FPS;
@@ -181,6 +185,8 @@ private:
         if (!config->is_game_over) {
             WaveManager::instance()->onUpdate(delta_time);
             EnemyManager::instance()->onUpdate(delta_time);
+            BulletManager::instance()->onUpdate(delta_time);
+            TowerManager::instance()->onUpdate(delta_time);
         }
     }
 
@@ -192,6 +198,8 @@ private:
         SDL_RenderCopy(m_renderer.get(), m_tex_tile_map.get(), nullptr, &rect_dst);
 
         EnemyManager::instance()->onRender(m_renderer.get());
+        BulletManager::instance()->onRender(m_renderer.get());
+        TowerManager::instance()->onRender(m_renderer.get());
     }
 
     /** @brief 生成瓦片地图纹理 */

@@ -24,6 +24,12 @@
     <Filter Include="头文件\tower">
       <UniqueIdentifier>{952ab9f4-327a-478d-8766-1bb09654292b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\util">
+      <UniqueIdentifier>{e6352c7d-0424-42d0-a1de-8bd78e343409}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\basic">
+      <UniqueIdentifier>{23785a8e-9afa-4a5d-9e54-8c0e2fa9f524}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -45,27 +51,6 @@
     </ClInclude>
     <ClInclude Include="manager.hpp">
       <Filter>头文件\manager</Filter>
-    </ClInclude>
-    <ClInclude Include="animation.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="map.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="route.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="tile.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="timer.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="wave.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="vector2.hpp">
-      <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="enemy_type.hpp">
       <Filter>头文件\enemy</Filter>
@@ -124,9 +109,6 @@
     <ClInclude Include="bullet_type.hpp">
       <Filter>头文件\bullet</Filter>
     </ClInclude>
-    <ClInclude Include="facing.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="archer_tower.hpp">
       <Filter>头文件\tower</Filter>
     </ClInclude>
@@ -138,6 +120,33 @@
     </ClInclude>
     <ClInclude Include="tower_manager.hpp">
       <Filter>头文件\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="vector2.hpp">
+      <Filter>头文件\util</Filter>
+    </ClInclude>
+    <ClInclude Include="timer.hpp">
+      <Filter>头文件\util</Filter>
+    </ClInclude>
+    <ClInclude Include="animation.hpp">
+      <Filter>头文件\util</Filter>
+    </ClInclude>
+    <ClInclude Include="facing.hpp">
+      <Filter>头文件\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="map.hpp">
+      <Filter>头文件\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="tile.hpp">
+      <Filter>头文件\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="route.hpp">
+      <Filter>头文件\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="wave.hpp">
+      <Filter>头文件\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="coin_prop.hpp">
+      <Filter>头文件\basic</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -137,7 +137,7 @@ private:
 	Vector2 position;               // 防御塔位置
 	bool can_fire;                  // 是否可以开火
 	Facing facing;                  // 朝向
-	std::unique_ptr<Animation> anim_current = std::make_unique<Animation>(anim_idle_right); // 当前播放的动画
+	Animation* anim_current = &anim_idle_right; // 当前播放的动画
 
 private:
 	/**
@@ -149,16 +149,16 @@ private:
 		switch (facing)
 		{
 		case Facing::UP:
-			anim_current = std::make_unique<Animation>(anim_idle_up);
+			anim_current = &anim_idle_up;
 			break;
 		case Facing::DOWN:
-			anim_current = std::make_unique<Animation>(anim_idle_down);
+			anim_current = &anim_idle_down;
 			break;
 		case Facing::LEFT:
-			anim_current = std::make_unique<Animation>(anim_idle_left);
+			anim_current = &anim_idle_left;
 			break;
 		case Facing::RIGHT:
-			anim_current = std::make_unique<Animation>(anim_idle_right);
+			anim_current = &anim_idle_right;
 			break;
 		}
 	}
@@ -172,16 +172,16 @@ private:
 		switch (facing)
 		{
 		case Facing::UP:
-			anim_current = std::make_unique<Animation>(anim_fire_up);
+			anim_current = &anim_fire_up;
 			break;											
 		case Facing::DOWN:									
-			anim_current = std::make_unique<Animation>(anim_fire_down);
+			anim_current = &anim_fire_down;
 			break;											
 		case Facing::LEFT:									
-			anim_current = std::make_unique<Animation>(anim_fire_left);
+			anim_current = &anim_fire_left;
 			break;											
 		case Facing::RIGHT:									
-			anim_current = std::make_unique<Animation>(anim_fire_right);
+			anim_current = &anim_fire_right;
 			break;
 		}
 	}
@@ -207,7 +207,7 @@ private:
 	 *
 	 * 在视野范围内寻找最接近终点的敌人作为攻击目标
 	 */
-	std::unique_ptr<Enemy> findTargetEnemy()
+	std::unique_ptr<Enemy> findTargetEnemy() const
 	{
 		double process = -1.0;
 		double view_range = 0.0;
@@ -257,7 +257,7 @@ private:
 		auto target_enemy = findTargetEnemy();
 		if (!target_enemy) return;
 
-		can_fire = true;
+		can_fire = false;
 		static auto* config = ConfigManager::instance();
 		static const auto& sound_pool = ResourceManager::instance()->getSoundPool();
 

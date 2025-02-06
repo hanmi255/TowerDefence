@@ -9,6 +9,8 @@
 #include "skeleton_enemy.hpp"
 #include "goblin_enemy.hpp"
 #include "goblin_priest_enemy.hpp"
+#include "bullet_manager.hpp"
+#include "coin_manager.hpp"
 
 #include <vector>
 #include <memory>
@@ -189,7 +191,47 @@ private:
      */
     void processBulletCollision()
     {
-        // TODO: 实现子弹碰撞检测逻辑
+        static const auto& bullet_list = BulletManager::instance()->getBulletList();
+
+        for (auto* enemy : m_enemy_list) {
+            if (enemy->canRemove()) continue;
+
+            const Vector2& size_enemy = enemy->getSize();
+            const Vector2& position_enemy = enemy->getPosition();
+
+            for (auto* bullet : bullet_list) {
+                if (!bullet->canCollide()) continue;
+
+                const Vector2& position_bullet = bullet->getPosition();
+
+                if (position_bullet.x >= position_enemy.x - size_enemy.x / 2
+                    && position_bullet.x <= position_enemy.x + size_enemy.x / 2
+                    && position_bullet.y >= position_enemy.y - size_enemy.y / 2
+                    && position_bullet.y <= position_enemy.y + size_enemy.y / 2) {
+                    double damage = bullet->getDamage();
+                    double damage_range = bullet->getDamageRange();
+
+                    if (damage_range < 0) {
+                        enemy->decreaseHP(damage);
+                        if (enemy->canRemove()) 
+                            trySpawnCoinProp(position_enemy, enemy->getRewardRatio());
+                    }
+                    else {
+                        for (auto* target_enemy : m_enemy_list) {
+                            const Vector2& position_target_enemy = target_enemy->getPosition();
+
+                            if ((position_target_enemy - position_bullet).length() <= damage_range) {
+                                target_enemy->decreaseHP(damage);
+                                if (target_enemy->canRemove())
+                                    trySpawnCoinProp(position_target_enemy, target_enemy->getRewardRatio());
+                            }
+                        }
+                    }
+
+                    bullet->onCollide(enemy);
+                }
+            }
+        }
     }
 
     /**
@@ -207,5 +249,13 @@ private:
 
                 return deletable;
             }), m_enemy_list.end());
+    }
+
+    void trySpawnCoinProp(const Vector2& position, double ratio)
+    {
+        static auto* coin = CoinManager::instance();
+
+        if((double)(rand() % 100) / 100 <= ratio)
+            coin->spawnCoinProp(position);
     }
 };

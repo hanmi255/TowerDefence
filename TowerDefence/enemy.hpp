@@ -29,14 +29,38 @@ public:
 	/**
 	 * @brief 构造函数，初始化定时器和动画系统
 	 */
-	Enemy() 
+	Enemy()
 	{
 		timer_skill.setOneShot(false);
 		timer_skill.setOnTimeOut(std::bind(&Enemy::on_skill_released, this));
 
 		timer_sketch.setOneShot(true);
 		timer_sketch.setWaitTime(0.075);
-		timer_sketch.setOnTimeOut([&](){ is_show_sketch = false; });
+		timer_sketch.setOnTimeOut([&]() { is_show_sketch = false; });
+
+		timer_restore_speed.setOneShot(true);
+		timer_sketch.setOnTimeOut([&]() { speed = max_speed; });
+	}
+
+	/**
+	 * @brief 拷贝构造函数
+	 * @param other 要拷贝的敌人
+	 */
+	Enemy(const Enemy& other)
+		: size(other.size), hp(other.hp), max_hp(other.max_hp), speed(other.speed),
+		max_speed(other.max_speed), damage(other.damage), reward_ratio(other.reward_ratio),
+		recover_interval(other.recover_interval), recover_range(other.recover_range),
+		recover_intensity(other.recover_intensity), position(other.position), velocity(other.velocity),
+		direction(other.direction), is_valid(other.is_valid), is_show_sketch(other.is_show_sketch),
+		anim_current(other.anim_current ? anim_current : nullptr),
+		route(other.route ? std::make_unique<Route>(*other.route) : nullptr) 
+	{
+		timer_skill.setOneShot(false);
+		timer_skill.setOnTimeOut(std::bind(&Enemy::on_skill_released, this));
+
+		timer_sketch.setOneShot(true);
+		timer_sketch.setWaitTime(0.075);
+		timer_sketch.setOnTimeOut([&]() { is_show_sketch = false; });
 
 		timer_restore_speed.setOneShot(true);
 		timer_sketch.setOnTimeOut([&]() { speed = max_speed; });
@@ -46,20 +70,20 @@ public:
 
 	/**
 	 * @brief 更新敌人状态
-	 * @param deltaTime 帧间隔时间
+	 * @param delta_time 帧间隔时间
 	 *
 	 * 更新内容包括：
 	 * - 定时器状态
 	 * - 位置和移动
 	 * - 动画状态
 	 */
-	void onUpdate(double deltaTime)
+	void onUpdate(double delta_time)
 	{
-		timer_skill.onUpdate(deltaTime);
-		timer_sketch.onUpdate(deltaTime);
-		timer_restore_speed.onUpdate(deltaTime);
+		timer_skill.onUpdate(delta_time);
+		timer_sketch.onUpdate(delta_time);
+		timer_restore_speed.onUpdate(delta_time);
 
-		Vector2 move_distance = velocity * deltaTime;
+		Vector2 move_distance = velocity * delta_time;
 		Vector2 target_distace = target_position - position;
 		position += move_distance < target_distace ? move_distance : target_distace;
 
@@ -77,16 +101,16 @@ public:
 
 		if (is_show_x_anim) {
 			anim_current = (velocity.x > 0)
-				? (is_show_sketch ? std::make_unique<Animation>(anim_right_sketch) : std::make_unique<Animation>(anim_right))
-				: (is_show_sketch ? std::make_unique<Animation>(anim_left_sketch) : std::make_unique<Animation>(anim_left));
+				? (is_show_sketch ? &anim_right_sketch : &anim_right)
+				: (is_show_sketch ? &anim_left_sketch : &anim_left);
 		}
 		else {
 			anim_current = (velocity.y > 0)
-				? (is_show_sketch ? std::make_unique<Animation>(anim_down_sketch) : std::make_unique<Animation>(anim_down))
-				: (is_show_sketch ? std::make_unique<Animation>(anim_up_sketch) : std::make_unique<Animation>(anim_up));
+				? (is_show_sketch ? &anim_down_sketch : &anim_down)
+				: (is_show_sketch ? &anim_up_sketch : &anim_up);
 		}
 
-		anim_current->onUpdate(deltaTime);
+		anim_current->onUpdate(delta_time);
 	}
 
 	/**
@@ -351,7 +375,7 @@ private:
 	Timer timer_sketch;							// 受击特效计时器
 	bool is_show_sketch = false;				// 是否显示受击特效
 
-	std::unique_ptr<Animation> anim_current;	// 当前播放的动画
+	Animation* anim_current;					// 当前播放的动画
 
 	SkillCallback on_skill_released;			// 技能释放回调
 

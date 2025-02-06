@@ -144,6 +144,7 @@
     <ClInclude Include="bullet_manager.hpp" />
     <ClInclude Include="bullet_type.hpp" />
     <ClInclude Include="coin_manager.hpp" />
+    <ClInclude Include="coin_prop.hpp" />
     <ClInclude Include="config_manager.hpp" />
     <ClInclude Include="enemy.hpp" />
     <ClInclude Include="enemy_manager.hpp" />
