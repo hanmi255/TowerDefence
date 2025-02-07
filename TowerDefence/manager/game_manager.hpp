@@ -7,6 +7,7 @@
 #include "wave_manager.hpp"
 #include "tower_manager.hpp"
 #include "bullet_manager.hpp"
+#include "../ui/status_bar.hpp"
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -83,8 +84,10 @@ protected:
         loadConfig();
         createWindowAndRenderer();
 
-        initAssert(ResourceManager::instance()->loadFromFile(m_renderer.get()), "资源管理器初始化失败");
-        initAssert(generateTileMapTexture(), "瓦片地图纹理生成失败");
+        initAssert(ResourceManager::instance()->loadFromFile(m_renderer.get()), u8"资源管理器初始化失败");
+        initAssert(generateTileMapTexture(), u8"瓦片地图纹理生成失败");
+
+        m_status_bar.setPosition(15, 15);
     }
 
     /** @brief 清理SDL资源 */
@@ -99,6 +102,8 @@ protected:
 private:
     SDL_Event m_event;                                       // SDL事件
     bool m_quit = false;                                     // 退出标志
+
+    StatusBar m_status_bar;                                  // 状态栏
 
     std::unique_ptr<SDL_Window, SDLDeleter> m_window;        // 游戏窗口
     std::unique_ptr<SDL_Renderer, SDLDeleter> m_renderer;    // 渲染器
@@ -183,6 +188,7 @@ private:
         static auto* config = ConfigManager::instance();
 
         if (!config->is_game_over) {
+            m_status_bar.onUpdate(m_renderer.get());
             WaveManager::instance()->onUpdate(delta_time);
             EnemyManager::instance()->onUpdate(delta_time);
             BulletManager::instance()->onUpdate(delta_time);
@@ -200,6 +206,10 @@ private:
         EnemyManager::instance()->onRender(m_renderer.get());
         BulletManager::instance()->onRender(m_renderer.get());
         TowerManager::instance()->onRender(m_renderer.get());
+
+        if (!config->is_game_over) {
+            m_status_bar.onRender(m_renderer.get());
+        }
     }
 
     /** @brief 生成瓦片地图纹理 */

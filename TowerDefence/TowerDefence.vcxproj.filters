@@ -30,6 +30,12 @@
     <Filter Include="头文件\tower">
       <UniqueIdentifier>{bf899b34-abe6-4804-a5db-59c1b770b258}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\ui">
+      <UniqueIdentifier>{5d77df4f-4813-4c97-ab76-4d01abd7be09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\ui\panel">
+      <UniqueIdentifier>{44b1a74e-8ad6-4bc6-8084-cd828707fb7f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -147,6 +153,9 @@
     </ClInclude>
     <ClInclude Include="tower\tower_type.hpp">
       <Filter>头文件\tower</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\status_bar.hpp">
+      <Filter>头文件\ui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

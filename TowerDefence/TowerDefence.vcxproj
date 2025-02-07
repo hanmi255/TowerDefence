@@ -168,6 +168,7 @@
     <ClInclude Include="tower\gunner_tower.hpp" />
     <ClInclude Include="tower\tower.hpp" />
     <ClInclude Include="tower\tower_type.hpp" />
+    <ClInclude Include="ui\status_bar.hpp" />
     <ClInclude Include="util\animation.hpp" />
     <ClInclude Include="util\timer.hpp" />
     <ClInclude Include="util\vector2.hpp" />
