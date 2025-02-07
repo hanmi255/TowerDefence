@@ -8,7 +8,6 @@
 
 #include <memory>
 #include <functional>
-#include <iostream>
 
 /**
  * @brief 游戏中的敌人类，实现敌人的移动、动画、状态管理等功能
@@ -39,7 +38,7 @@ public:
 		timer_sketch.setOnTimeOut([&]() { is_show_sketch = false; });
 
 		timer_restore_speed.setOneShot(true);
-		timer_sketch.setOnTimeOut([&]() { speed = max_speed; });
+		timer_restore_speed.setOnTimeOut([&]() { speed = max_speed; });
 	}
 
 	~Enemy() = default;
@@ -75,15 +74,17 @@ public:
 
 		bool is_show_x_anim = abs(velocity.x) >= abs(velocity.y);
 
-		if (is_show_x_anim) {
-			anim_current = (velocity.x > 0)
-				? (is_show_sketch ? &anim_right_sketch : &anim_right)
-				: (is_show_sketch ? &anim_left_sketch : &anim_left);
+		if (is_show_sketch) {
+			if (is_show_x_anim)
+				anim_current = velocity.x > 0 ? &anim_right_sketch : &anim_left_sketch;
+			else
+				anim_current = velocity.y > 0 ? &anim_down_sketch : &anim_up_sketch;
 		}
 		else {
-			anim_current = (velocity.y > 0)
-				? (is_show_sketch ? &anim_down_sketch : &anim_down)
-				: (is_show_sketch ? &anim_up_sketch : &anim_up);
+			if (is_show_x_anim)
+				anim_current = velocity.x > 0 ? &anim_right : &anim_left;
+			else
+				anim_current = velocity.y > 0 ? &anim_down : &anim_up;
 		}
 
 		anim_current->onUpdate(delta_time);

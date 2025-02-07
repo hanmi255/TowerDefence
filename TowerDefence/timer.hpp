@@ -20,7 +20,7 @@ public:
      */
     void restart()
     {
-        pass_time = 0.0;
+        pass_time = 0;
         shotted = false;
     }
 
@@ -39,7 +39,7 @@ public:
      */
     void setOneShot(bool one_shot)
     {
-        this->one_shot = false;
+        this->one_shot = one_shot;
     }
 
     /**

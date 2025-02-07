@@ -40,6 +40,7 @@ public:
 
         processHomeCollision();      // 处理与基地的碰撞
         processBulletCollision();    // 处理与子弹的碰撞
+
         removeInvaliedEnemy();       // 移除无效的敌人
     }
 
