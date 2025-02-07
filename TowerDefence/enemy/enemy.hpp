@@ -1,10 +1,10 @@
 ﻿#pragma once
 
-#include "vector2.hpp"
-#include "timer.hpp"
-#include "animation.hpp"
-#include "route.hpp"
-#include "config_manager.hpp"
+#include "../util/vector2.hpp"
+#include "../util/timer.hpp"
+#include "../util/animation.hpp"
+#include "../basic/route.hpp"
+#include "../manager/config_manager.hpp"
 
 #include <memory>
 #include <functional>

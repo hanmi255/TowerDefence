@@ -1,6 +1,6 @@
 ﻿#define SDL_MAIN_HANDLED
 
-#include "game_manager.hpp"
+#include "manager/game_manager.hpp"
 
 int main(int argc, char** argv)
 {

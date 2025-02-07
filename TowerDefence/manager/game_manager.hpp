@@ -129,9 +129,9 @@ private:
     /** @brief 加载配置文件 */
     void loadConfig() 
     {
-        initAssert(ConfigManager::instance()->map.loadMap("map.csv"), u8"地图加载失败");
-        initAssert(ConfigManager::instance()->loadLevelConfig("level.json"), u8"关卡配置加载失败");
-        initAssert(ConfigManager::instance()->loadGameConfig("config.json"), u8"游戏配置加载失败");
+        initAssert(ConfigManager::instance()->map.loadMap("file/map.csv"), u8"地图加载失败");
+        initAssert(ConfigManager::instance()->loadLevelConfig("file/level.json"), u8"关卡配置加载失败");
+        initAssert(ConfigManager::instance()->loadGameConfig("file/config.json"), u8"游戏配置加载失败");
     }
 
     /** @brief 创建窗口和渲染器 */

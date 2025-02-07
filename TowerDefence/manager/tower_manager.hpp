@@ -1,13 +1,13 @@
 ﻿#pragma once
 
 #include "manager.hpp"
-#include "tower.hpp"
-#include "tower_type.hpp"
-#include "archer_tower.hpp"
-#include "axeman_tower.hpp"
-#include "gunner_tower.hpp"
 #include "config_manager.hpp"
 #include "resource_manager.hpp"
+#include "../tower/tower.hpp"
+#include "../tower/tower_type.hpp"
+#include "../tower/archer_tower.hpp"
+#include "../tower/axeman_tower.hpp"
+#include "../tower/gunner_tower.hpp"
 
 #include <vector>
 #include <memory>

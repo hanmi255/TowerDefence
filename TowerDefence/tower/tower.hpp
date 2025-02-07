@@ -1,12 +1,12 @@
 ﻿#pragma once
 
-#include "vector2.hpp"
-#include "animation.hpp"
-#include "tower_type.hpp"
-#include "bullet_manager.hpp"
-#include "timer.hpp"
-#include "facing.hpp"
-#include "enemy_manager.hpp"
+#include "../util/vector2.hpp"
+#include "../util/animation.hpp"
+#include "../util/timer.hpp"
+#include "../tower/tower_type.hpp"
+#include "../basic/facing.hpp"
+#include "../manager/bullet_manager.hpp"
+#include "../manager/enemy_manager.hpp"
 
 #include <functional>
 

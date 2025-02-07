@@ -1,16 +1,16 @@
 ﻿#pragma once
 
 #include "manager.hpp"
-#include "enemy.hpp"
 #include "config_manager.hpp"
 #include "home_manager.hpp"
-#include "slime_enemy.hpp"
-#include "king_slime_enemy.hpp"
-#include "skeleton_enemy.hpp"
-#include "goblin_enemy.hpp"
-#include "goblin_priest_enemy.hpp"
 #include "bullet_manager.hpp"
 #include "coin_manager.hpp"
+#include "../enemy/enemy.hpp"
+#include "../enemy/slime_enemy.hpp"
+#include "../enemy/king_slime_enemy.hpp"
+#include "../enemy/skeleton_enemy.hpp"
+#include "../enemy/goblin_enemy.hpp"
+#include "../enemy/goblin_priest_enemy.hpp"
 
 #include <vector>
 #include <memory>

@@ -1,9 +1,9 @@
 ﻿#pragma once
 
-#include "vector2.hpp"
-#include "enemy.hpp"
-#include "animation.hpp"
-#include "config_manager.hpp"
+#include "../util/vector2.hpp"
+#include "../util/animation.hpp"
+#include "../enemy/enemy.hpp"
+#include "../manager/config_manager.hpp"
 
 /**
  * @class Bullet

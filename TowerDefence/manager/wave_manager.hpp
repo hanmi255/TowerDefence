@@ -1,11 +1,11 @@
 ﻿#pragma once
 
 #include "manager.hpp"
-#include "wave.hpp"
-#include "timer.hpp"
 #include "config_manager.hpp"
 #include "enemy_manager.hpp"
 #include "coin_manager.hpp"
+#include "../basic/wave.hpp"
+#include "../util/timer.hpp"
 
 /**
  * @brief 游戏波次管理器，负责控制敌人波次的刷新和进程

@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "tower.hpp"	
-#include "resource_manager.hpp"
+#include "../manager/resource_manager.hpp"
 
 /**
  * @brief 斧头兵塔类，继承自基础防御塔类

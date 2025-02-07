@@ -2,7 +2,7 @@
 
 #include "manager.hpp"
 #include "config_manager.hpp"
-#include "coin_prop.hpp"
+#include "../basic/coin_prop.hpp"
 
 #include <vector>
 #include <memory>

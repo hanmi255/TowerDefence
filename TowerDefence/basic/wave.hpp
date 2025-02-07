@@ -1,6 +1,7 @@
 ﻿#pragma once
 
-#include "enemy_type.hpp"
+#include "../enemy/enemy_type.hpp"
+
 #include <vector>
 
 /**

@@ -1,8 +1,10 @@
 ﻿#pragma once
 
 #include "enemy.hpp"
-#include "config_manager.hpp"
-#include "resource_manager.hpp"
+#include "../manager/config_manager.hpp"
+#include "../manager/resource_manager.hpp"
+
+#include <vector>
 
 /**
  * @brief 皇家史莱姆敌人类，继承自基础敌人类

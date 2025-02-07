@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "bullet.hpp"
-#include "resource_manager.hpp"
+#include "../manager/resource_manager.hpp"
 
 #include <vector>
 

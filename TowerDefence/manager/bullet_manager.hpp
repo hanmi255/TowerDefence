@@ -1,11 +1,11 @@
 ﻿#pragma once
 
 #include "manager.hpp"
-#include "bullet.hpp"
-#include "bullet_type.hpp"
-#include "arrow_bullet.hpp"
-#include "axe_bullet.hpp"
-#include "shell_bullet.hpp"
+#include "../bullet/bullet.hpp"
+#include "../bullet/bullet_type.hpp"
+#include "../bullet/arrow_bullet.hpp"
+#include "../bullet/axe_bullet.hpp"
+#include "../bullet/shell_bullet.hpp"
 
 #include <vector>
 #include <memory>

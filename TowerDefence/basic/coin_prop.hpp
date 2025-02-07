@@ -1,9 +1,10 @@
 ﻿#pragma once
 
-#include "vector2.hpp"
-#include "timer.hpp"
+#include "../util/vector2.hpp"
+#include "../util/timer.hpp"
+#include "../manager/resource_manager.hpp"
 #include "tile.hpp"
-#include "resource_manager.hpp"
+
 
 #include <SDL.h>
 
