@@ -67,8 +67,10 @@ public:
         height_text = surface_text_background->h;
 
         // 创建新的纹理
-        tex_text_background.reset(SDL_CreateTextureFromSurface(renderer, surface_text_background.get()));
-        tex_text_foreground.reset(SDL_CreateTextureFromSurface(renderer, surface_text_background.get()));
+        tex_text_background = std::unique_ptr<SDL_Texture, decltype(&SDL_DestroyTexture)>(
+            SDL_CreateTextureFromSurface(renderer, surface_text_background.get()), SDL_DestroyTexture);
+        tex_text_foreground = std::unique_ptr<SDL_Texture, decltype(&SDL_DestroyTexture)>(
+            SDL_CreateTextureFromSurface(renderer, surface_text_foreground.get()), SDL_DestroyTexture);
     }
 
     /**
