@@ -157,5 +157,8 @@
     <ClInclude Include="ui\status_bar.hpp">
       <Filter>头文件\ui</Filter>
     </ClInclude>
+    <ClInclude Include="ui\panel\panel.hpp">
+      <Filter>头文件\ui\panel</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
