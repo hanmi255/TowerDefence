@@ -14,10 +14,10 @@ public:
     {
         const auto& texture_pool = ResourceManager::instance()->getTexturePool();
 
-        tex_idle.reset(texture_pool.find(ResID::Tex_UIPlaceIdle)->second);
-        tex_hovered_top.reset(texture_pool.find(ResID::Tex_UIPlaceHoveredTop)->second);
-        tex_hovered_left.reset(texture_pool.find(ResID::Tex_UIPlaceHoveredLeft)->second);
-        tex_hovered_right.reset(texture_pool.find(ResID::Tex_UIPlaceHoveredRight)->second);
+        tex_idle = std::shared_ptr<SDL_Texture>(texture_pool.find(ResID::Tex_UIPlaceIdle)->second, SDL_DestroyTexture);
+        tex_hovered_top = std::shared_ptr<SDL_Texture>(texture_pool.find(ResID::Tex_UIPlaceHoveredTop)->second, SDL_DestroyTexture);
+        tex_hovered_left = std::shared_ptr<SDL_Texture>(texture_pool.find(ResID::Tex_UIPlaceHoveredLeft)->second, SDL_DestroyTexture);
+        tex_hovered_right = std::shared_ptr<SDL_Texture>(texture_pool.find(ResID::Tex_UIPlaceHoveredRight)->second, SDL_DestroyTexture);
     }
 
     ~PlacePanel() = default;

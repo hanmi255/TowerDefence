@@ -16,7 +16,7 @@ class Panel
 public:
 	Panel()
 	{
-		tex_select_cursor.reset(ResourceManager::instance()->getTexturePool().find(ResID::Tex_UISelectCursor)->second);
+		tex_select_cursor = std::shared_ptr<SDL_Texture>(ResourceManager::instance()->getTexturePool().find(ResID::Tex_UISelectCursor)->second, SDL_DestroyTexture);
 	} 
 	~Panel() = default;
 
@@ -152,6 +152,9 @@ public:
 
 		tex_text_background.reset(SDL_CreateTextureFromSurface(renderer, surface_text_background.get()));
 		tex_text_foreground.reset(SDL_CreateTextureFromSurface(renderer, surface_text_foreground.get()));
+
+		SDL_FreeSurface(surface_text_background.release());
+		SDL_FreeSurface(surface_text_foreground.release());
 	}
 
 	/**
@@ -180,26 +183,26 @@ public:
 			height
 		};
 
-		std::unique_ptr<SDL_Texture, decltype(&SDL_DestroyTexture)> tex_panel{ nullptr, SDL_DestroyTexture };
+		std::shared_ptr<SDL_Texture> tex_panel{ nullptr, SDL_DestroyTexture };
 		switch (hovered_target)
 		{
 		case Panel::HoveredTarget::NONE:
-			tex_panel = std::move(tex_idle);
+			tex_panel = tex_idle;
 			break;
 		case Panel::HoveredTarget::TOP:
-			tex_panel = std::move(tex_hovered_top);
+			tex_panel = tex_hovered_top;
 			break;
 		case Panel::HoveredTarget::LEFT:
-			tex_panel = std::move(tex_hovered_left);
+			tex_panel = tex_hovered_left;
 			break;
 		case Panel::HoveredTarget::RIGHT:
-			tex_panel = std::move(tex_hovered_right);
+			tex_panel = tex_hovered_right;
 			break;
 		}
 
 		SDL_RenderCopy(renderer, tex_panel.get(), nullptr, &rect_dst_panel);
 
-		if (hovered_target != HoveredTarget::NONE) return;
+		if (hovered_target == HoveredTarget::NONE) return;
 
 		SDL_Rect rect_dst_text;
 
@@ -231,11 +234,12 @@ protected:
 	SDL_Point index_tile_selected = { 0, 0 };  // 选中的瓦片索引
 	SDL_Point center_position = { 0, 0 };	   // 中心位置
 
-	std::unique_ptr<SDL_Texture, decltype(&SDL_DestroyTexture)> tex_idle{ nullptr, SDL_DestroyTexture };		  // 空闲纹理
-	std::unique_ptr<SDL_Texture, decltype(&SDL_DestroyTexture)> tex_hovered_top{ nullptr, SDL_DestroyTexture };   // 悬停在顶部纹理
-	std::unique_ptr<SDL_Texture, decltype(&SDL_DestroyTexture)> tex_hovered_left{ nullptr, SDL_DestroyTexture };  // 悬停在左侧纹理
-	std::unique_ptr<SDL_Texture, decltype(&SDL_DestroyTexture)> tex_hovered_right{ nullptr, SDL_DestroyTexture }; // 悬停在右侧纹理
-	std::unique_ptr<SDL_Texture, decltype(&SDL_DestroyTexture)> tex_select_cursor{ nullptr, SDL_DestroyTexture }; // 选择光标纹理
+	std::shared_ptr<SDL_Texture> tex_idle{ nullptr, SDL_DestroyTexture };			// 空闲纹理
+	std::shared_ptr<SDL_Texture> tex_hovered_top{ nullptr, SDL_DestroyTexture };    // 悬停在顶部纹理
+	std::shared_ptr<SDL_Texture> tex_hovered_left{ nullptr, SDL_DestroyTexture };   // 悬停在左侧纹理
+	std::shared_ptr<SDL_Texture> tex_hovered_right{ nullptr, SDL_DestroyTexture };  // 悬停在右侧纹理
+	std::shared_ptr<SDL_Texture> tex_select_cursor{ nullptr, SDL_DestroyTexture };  // 选择光标纹理
+
 
 	int value_top = 0, value_left = 0, value_right = 0;  // 各个方向的值
 

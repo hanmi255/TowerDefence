@@ -32,19 +32,19 @@ public:
         // 配置炮弹飞行动画
         animation.setLoop(true);
         animation.setInterval(0.1);
-        animation.setFrameData(tex_shell, 4, 2, index_list);
+        animation.setFrameData(tex_shell, 2, 1, index_list);
 
         // 配置爆炸动画
         anim_explode.setLoop(false);
         anim_explode.setInterval(0.1);
         anim_explode.setFrameData(tex_explode, 5, 1, index_explode_list);
-        animation.setOnFinished([&]() {
+        anim_explode.setOnFinished([&]() {
             makeInvalid();
             });
 
-        damage_range = 96;    // 设置伤害范围
-        can_rotate = false;   // 禁用旋转
-        size.x = 48, size.y = 48; // 设置炮弹大小
+        damage_range = 96;   
+        can_rotate = false;
+        size.x = 48, size.y = 48;
     }
 
     ~ShellBullet() = default;
@@ -61,6 +61,7 @@ public:
             Bullet::onUpdate(delta_time);
             return;
         }
+
         anim_explode.onUpdate(delta_time);
     }
 
@@ -76,6 +77,7 @@ public:
             Bullet::onRender(renderer);
             return;
         }
+
         static SDL_Point point;
         point.x = (int)position.x - 96 / 2;
         point.y = (int)position.y - 96 / 2;
@@ -97,5 +99,5 @@ public:
     }
 
 private:
-    Animation anim_explode;   // 爆炸动画
+    Animation anim_explode; // 爆炸动画
 };

@@ -11,10 +11,10 @@ public:
 	{
 		const auto& texture_pool = ResourceManager::instance()->getTexturePool();
 
-		tex_idle.reset(texture_pool.find(ResID::Tex_UIUpgradeIdle)->second);
-		tex_hovered_top.reset(texture_pool.find(ResID::Tex_UIUpgradeHoveredTop)->second);
-		tex_hovered_left.reset(texture_pool.find(ResID::Tex_UIUpgradeHoveredLeft)->second);
-		tex_hovered_right.reset(texture_pool.find(ResID::Tex_UIUpgradeHoveredRight)->second);
+		tex_idle = std::shared_ptr<SDL_Texture>(texture_pool.find(ResID::Tex_UIUpgradeIdle)->second, SDL_DestroyTexture);
+		tex_hovered_top = std::shared_ptr<SDL_Texture>(texture_pool.find(ResID::Tex_UIUpgradeHoveredTop)->second, SDL_DestroyTexture);
+		tex_hovered_left = std::shared_ptr<SDL_Texture>(texture_pool.find(ResID::Tex_UIUpgradeHoveredLeft)->second, SDL_DestroyTexture);
+		tex_hovered_right = std::shared_ptr<SDL_Texture>(texture_pool.find(ResID::Tex_UIUpgradeHoveredRight)->second, SDL_DestroyTexture);
 	}
 
 	~UpgradePanel() = default;
