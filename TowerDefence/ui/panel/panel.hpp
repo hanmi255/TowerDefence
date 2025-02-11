@@ -226,7 +226,7 @@ protected:
 	};
 
 protected:
-	bool visible = true;					   // 可见性
+	bool visible = false;					   // 可见性
 
 	SDL_Point index_tile_selected = { 0, 0 };  // 选中的瓦片索引
 	SDL_Point center_position = { 0, 0 };	   // 中心位置

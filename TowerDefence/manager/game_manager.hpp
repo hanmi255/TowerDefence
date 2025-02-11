@@ -8,6 +8,9 @@
 #include "tower_manager.hpp"
 #include "bullet_manager.hpp"
 #include "../ui/status_bar.hpp"
+#include "../ui/panel/panel.hpp"
+#include "../ui/panel/place_panel.hpp"
+#include "../ui/panel/upgrade_panel.hpp"
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -37,8 +40,6 @@ public:
     /** @brief 运行游戏主循环 */
     int run(int argc, char** argv) 
     {
-        TowerManager::instance()->placeTower(TowerType::Archer, { 5, 0 });
-
         using clock = std::chrono::high_resolution_clock;
         constexpr double TARGET_FPS = 60.0;
         constexpr double FRAME_TIME = 1.0 / TARGET_FPS;
@@ -88,6 +89,8 @@ protected:
         initAssert(generateTileMapTexture(), u8"瓦片地图纹理生成失败");
 
         m_status_bar.setPosition(15, 15);
+        m_place_panel = std::make_unique<PlacePanel>();
+        m_upgrade_panel = std::make_unique<UpgradePanel>();
     }
 
     /** @brief 清理SDL资源 */
@@ -108,6 +111,9 @@ private:
     std::unique_ptr<SDL_Window, SDLDeleter> m_window;        // 游戏窗口
     std::unique_ptr<SDL_Renderer, SDLDeleter> m_renderer;    // 渲染器
     std::unique_ptr<SDL_Texture, SDLDeleter> m_tex_tile_map; // 瓦片地图纹理
+
+    std::unique_ptr<PlacePanel> m_place_panel;               // 放置塔面板
+    std::unique_ptr<UpgradePanel> m_upgrade_panel;           // 升级塔面板
 
 private:
     /** @brief 初始化检查 */
@@ -180,6 +186,41 @@ private:
     /** @brief 处理输入 */
     void onInput()
     {
+        static SDL_Point position_center;
+        static SDL_Point index_tile_selected;
+        static auto* config = ConfigManager::instance();
+
+        switch (m_event.type) {
+        case SDL_QUIT:
+            m_quit = true;
+            break;
+        case SDL_MOUSEBUTTONDOWN:
+            if(config->is_game_over)
+                break;
+
+            if (getCursorIndexTile(index_tile_selected, m_event.motion.x, m_event.motion.y)) {
+                getSelectedTileCenter(position_center, index_tile_selected);
+
+                if (checkHome(index_tile_selected)) {
+                    m_upgrade_panel->setIndexTile(index_tile_selected);
+                    m_upgrade_panel->setCenterPosition(position_center);
+                    m_upgrade_panel->show();
+                }
+                else if (canPlaceTower(index_tile_selected)) {
+                    m_place_panel->setIndexTile(index_tile_selected);
+                    m_place_panel->setCenterPosition(position_center);
+                    m_place_panel->show();
+                }
+            }
+            break;
+        default:
+            break;
+        }
+
+        if (!config->is_game_over) {
+            m_place_panel->onInput(m_event);
+            m_upgrade_panel->onInput(m_event);
+        }
     }
 
     /** @brief 更新游戏状态 */
@@ -188,11 +229,14 @@ private:
         static auto* config = ConfigManager::instance();
 
         if (!config->is_game_over) {
+            m_place_panel->onUpdate(m_renderer.get());
+            m_upgrade_panel->onUpdate(m_renderer.get());
             m_status_bar.onUpdate(m_renderer.get());
             WaveManager::instance()->onUpdate(delta_time);
             EnemyManager::instance()->onUpdate(delta_time);
             BulletManager::instance()->onUpdate(delta_time);
             TowerManager::instance()->onUpdate(delta_time);
+            CoinManager::instance()->onUpdate(delta_time);
         }
     }
 
@@ -206,8 +250,11 @@ private:
         EnemyManager::instance()->onRender(m_renderer.get());
         BulletManager::instance()->onRender(m_renderer.get());
         TowerManager::instance()->onRender(m_renderer.get());
+        CoinManager::instance()->onRender(m_renderer.get());
 
         if (!config->is_game_over) {
+            m_place_panel->onRender(m_renderer.get());
+            m_upgrade_panel->onRender(m_renderer.get());
             m_status_bar.onRender(m_renderer.get());
         }
     }
@@ -351,5 +398,62 @@ private:
             SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "生成瓦片地图纹理失败: %s", e.what());
             return false;
         }
+    }
+
+    /** @brief 是否在home位置
+      * @param index_tile_selected 瓦片坐标 
+      */
+    bool checkHome(const SDL_Point& index_tile_selected)
+    {
+        static const auto& map = ConfigManager::instance()->map;
+        static const auto& index_home = map.getIndexHome();
+
+        return (index_tile_selected.x == index_home.x && index_tile_selected.y == index_home.y);
+    }
+
+    /** @brief 获取鼠标选中的瓦片坐标 
+      * @param index_tile_selected 瓦片坐标
+      * @param screen_x 鼠标屏幕坐标x
+      * @param screen_y 鼠标屏幕坐标y
+      * @return 是否成功获取
+      */
+    bool getCursorIndexTile(SDL_Point& index_tile_selected, int screen_x, int screen_y) const
+    {
+        static const auto& map = ConfigManager::instance()->map;
+        static const auto& rect_tile_map = ConfigManager::instance()->rect_tile_map;
+
+        if(screen_x < rect_tile_map.x || screen_x > rect_tile_map.x + rect_tile_map.w ||
+            screen_y < rect_tile_map.y || screen_y > rect_tile_map.y + rect_tile_map.h)
+            return false;
+
+        index_tile_selected.x = std::min((screen_x - rect_tile_map.x) / TILE_SIZE, (int)map.getWidth() - 1);
+        index_tile_selected.y = std::min((screen_y - rect_tile_map.y) / TILE_SIZE, (int)map.getHeight() - 1);
+
+        return true;
+    }
+
+    /** @brief 是否可以放置塔 
+      * @param index_tile_selected 瓦片坐标
+      * @return 是否可以放置
+      */
+    bool canPlaceTower(const SDL_Point& index_tile_selected) const
+    {
+        static const auto& map = ConfigManager::instance()->map;
+        const auto& tile_map = map.getTileMap();
+        const auto& tile = tile_map[index_tile_selected.y][index_tile_selected.x];
+
+        return (tile.decoration < 0 && tile.direction == Tile::Direction::NONE && !tile.has_tower);
+    }
+
+    /** @brief 获取选中瓦片中心坐标 
+      * @param position 瓦片中心坐标
+      * @param index_tile_selected 瓦片坐标
+      */
+    void getSelectedTileCenter(SDL_Point& position, const SDL_Point& index_tile_selected) const
+    {
+        static const auto& rect_tile_map = ConfigManager::instance()->rect_tile_map;
+
+        position.x = rect_tile_map.x + index_tile_selected.x * TILE_SIZE + TILE_SIZE / 2;
+        position.y = rect_tile_map.y + index_tile_selected.y * TILE_SIZE + TILE_SIZE / 2;
     }
 };

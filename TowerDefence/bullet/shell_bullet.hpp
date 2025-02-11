@@ -80,7 +80,7 @@ public:
         point.x = (int)position.x - 96 / 2;
         point.y = (int)position.y - 96 / 2;
 
-        animation.onRender(renderer, point);
+        anim_explode.onRender(renderer, point);
     }
 
     /**

@@ -108,6 +108,7 @@ public:
 			tower = std::make_unique<GunnerTower>();
 			break;
 		default:
+			tower = std::make_unique<ArcherTower>();
 			break;
 		}
 
