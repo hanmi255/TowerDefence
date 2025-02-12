@@ -166,5 +166,8 @@
     <ClInclude Include="ui\panel\upgrade_panel.hpp">
       <Filter>头文件\ui\panel</Filter>
     </ClInclude>
+    <ClInclude Include="manager\player_manager.hpp">
+      <Filter>头文件\manager</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -77,8 +77,7 @@ protected:
                 is_wave_started = true;
                 timer_spawn_event.setWaitTime(wave_list[index_wave].spawn_event_list[0].interval);
                 timer_spawn_event.restart();
-            }
-        );
+            });
 
         timer_spawn_event.setOneShot(true);
         timer_spawn_event.setOnTimeOut(
@@ -96,8 +95,7 @@ protected:
 
                 timer_spawn_event.setWaitTime(spawn_event_list[index_spawn_event].interval);
                 timer_spawn_event.restart();
-            }
-        );
+            });
     }
     ~WaveManager() = default;
 

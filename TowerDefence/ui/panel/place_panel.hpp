@@ -7,6 +7,10 @@
 
 #include <SDL2_gfxPrimitives.h>
 
+/**
+ * @class PlacePanel
+ * @brief 处理放置塔的面板类，继承自Panel类。
+ */
 class PlacePanel : public Panel
 {
 public:
@@ -22,6 +26,10 @@ public:
 
     ~PlacePanel() = default;
 
+    /**
+     * @brief 更新面板状态。
+     * @param renderer SDL渲染器指针。
+     */
     void onUpdate(SDL_Renderer* renderer) override
     {
         static auto* tower_manager = TowerManager::instance();
@@ -37,6 +45,10 @@ public:
         Panel::onUpdate(renderer);
     }
 
+    /**
+     * @brief 渲染面板。
+     * @param renderer SDL渲染器指针。
+     */
     void onRender(SDL_Renderer* renderer) override
     {
         if(!visible) return;
@@ -64,6 +76,9 @@ public:
     }
 
 protected:
+    /**
+     * @brief 点击顶部区域时的处理。
+     */
     void onClickTopArea() override
     {
         auto* coin_manager = CoinManager::instance();
@@ -74,6 +89,9 @@ protected:
         }
     }
 
+    /**
+     * @brief 点击左侧区域时的处理。
+     */
     void onClickLeftArea() override
     {
         auto* coin_manager = CoinManager::instance();
@@ -84,6 +102,9 @@ protected:
         }
     }
 
+    /**
+     * @brief 点击右侧区域时的处理。
+     */
     void onClickRightArea() override
     {
         auto* coin_manager = CoinManager::instance();
@@ -95,8 +116,8 @@ protected:
     }
 
 private:
-    const SDL_Color color_region_frame = { 30, 80, 162, 175 };
-    const SDL_Color color_region_content = { 0, 149, 217, 175 };
+    const SDL_Color color_region_frame = { 30, 80, 162, 175 };    // 区域边框颜色
+    const SDL_Color color_region_content = { 0, 149, 217, 175 };  // 区域内容颜色
 
-    int region_top = 0, region_left = 0, region_right = 0;
+    int region_top = 0, region_left = 0, region_right = 0;        // 各个区域的半径
 };

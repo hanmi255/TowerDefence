@@ -35,8 +35,7 @@ public:
                     if (!is_loop && on_finished) 
                         on_finished();
                 }
-            }
-        );
+            });
     }
    
     ~Animation() = default;

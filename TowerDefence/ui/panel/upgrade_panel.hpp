@@ -4,6 +4,10 @@
 #include "../../manager/resource_manager.hpp"
 #include "../../manager/tower_manager.hpp"
 
+/**
+ * @class UpgradePanel
+ * @brief 处理升级塔的面板类，继承自Panel类。
+ */
 class UpgradePanel : public Panel
 {
 public:
@@ -19,6 +23,10 @@ public:
 
 	~UpgradePanel() = default;
 
+	/**
+	 * @brief 更新面板状态
+	 * @param renderer 渲染器
+	 */
 	void onUpdate(SDL_Renderer* renderer) override
 	{
 		static auto* tower_manager = TowerManager::instance();
@@ -31,6 +39,9 @@ public:
 	}
 
 protected:
+	/**
+	 * @brief 点击顶部区域，尝试升级斧手
+	 */
 	void onClickTopArea() override
 	{
 		auto* coin_manager = CoinManager::instance();
@@ -41,6 +52,9 @@ protected:
 		}
 	}
 
+	/**
+	 * @brief 点击左侧区域，尝试升级弓箭手
+	 */
 	void onClickLeftArea() override
 	{
 		auto* coin_manager = CoinManager::instance();
@@ -51,6 +65,9 @@ protected:
 		}
 	}
 
+	/**
+	 * @brief 点击右侧区域，尝试升级枪手
+	 */
 	void onClickRightArea() override
 	{
 		auto* coin_manager = CoinManager::instance();

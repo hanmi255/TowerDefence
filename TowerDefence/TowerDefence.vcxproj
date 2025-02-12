@@ -120,6 +120,8 @@
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalIncludeDirectories>..\third_party\cJSON\include;..\third_party\SDL2\include;..\third_party\SDL2_gfx\include;..\third_party\SDL2_image\include;..\third_party\SDL2_mixer\include;..\third_party\SDL2_ttf\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard_C>stdclatest</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -160,6 +162,7 @@
     <ClInclude Include="manager\game_manager.hpp" />
     <ClInclude Include="manager\home_manager.hpp" />
     <ClInclude Include="manager\manager.hpp" />
+    <ClInclude Include="manager\player_manager.hpp" />
     <ClInclude Include="manager\resource_manager.hpp" />
     <ClInclude Include="manager\tower_manager.hpp" />
     <ClInclude Include="manager\wave_manager.hpp" />

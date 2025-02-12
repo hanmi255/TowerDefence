@@ -4,6 +4,7 @@
 #include "resource_manager.hpp"
 #include "config_manager.hpp"
 #include "enemy_manager.hpp"
+#include "player_manager.hpp"
 #include "wave_manager.hpp"
 #include "tower_manager.hpp"
 #include "bullet_manager.hpp"
@@ -85,8 +86,8 @@ protected:
         loadConfig();
         createWindowAndRenderer();
 
-        initAssert(ResourceManager::instance()->loadFromFile(m_renderer.get()), u8"资源管理器初始化失败");
-        initAssert(generateTileMapTexture(), u8"瓦片地图纹理生成失败");
+        initAssert(ResourceManager::instance()->loadFromFile(m_renderer.get()), "资源管理器初始化失败");
+        initAssert(generateTileMapTexture(), "瓦片地图纹理生成失败");
 
         m_status_bar.setPosition(15, 15);
         m_place_panel = std::make_unique<PlacePanel>();
@@ -121,17 +122,17 @@ private:
     {
         if (flag) return;
 
-        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, u8"游戏启动失败", errorMessage, m_window.get());
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "游戏启动失败", errorMessage, m_window.get());
         exit(-1);
     }
 
     /** @brief 初始化SDL系统 */
     void initializeSDL() 
     {
-        initAssert(!SDL_Init(SDL_INIT_EVERYTHING), u8"SDL初始化失败");
-        initAssert(IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG), u8"SDL_image初始化失败");
-        initAssert(Mix_Init(MIX_INIT_MP3), u8"SDL_mixer 初始化失败！");
-        initAssert(!TTF_Init(), u8"SDL_ttf初始化失败");
+        initAssert(!SDL_Init(SDL_INIT_EVERYTHING), "SDL初始化失败");
+        initAssert(IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG), "SDL_image初始化失败");
+        initAssert(Mix_Init(MIX_INIT_MP3), "SDL_mixer 初始化失败！");
+        initAssert(!TTF_Init(), "SDL_ttf初始化失败");
         Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
 
         SDL_SetHint(SDL_HINT_IME_SHOW_UI, "1");
@@ -140,9 +141,9 @@ private:
     /** @brief 加载配置文件 */
     void loadConfig() 
     {
-        initAssert(ConfigManager::instance()->map.loadMap("file/map.csv"), u8"地图加载失败");
-        initAssert(ConfigManager::instance()->loadLevelConfig("file/level.json"), u8"关卡配置加载失败");
-        initAssert(ConfigManager::instance()->loadGameConfig("file/config.json"), u8"游戏配置加载失败");
+        initAssert(ConfigManager::instance()->map.loadMap("file/map.csv"), "地图加载失败");
+        initAssert(ConfigManager::instance()->loadLevelConfig("file/level.json"), "关卡配置加载失败");
+        initAssert(ConfigManager::instance()->loadGameConfig("file/config.json"), "游戏配置加载失败");
     }
 
     /** @brief 创建窗口和渲染器 */
@@ -157,7 +158,7 @@ private:
             SDL_WINDOW_SHOWN
         ));
 
-        initAssert(m_window.get(), u8"游戏创建窗口失败");
+        initAssert(m_window.get(), "游戏创建窗口失败");
 
         m_renderer.reset(SDL_CreateRenderer(
             m_window.get(),
@@ -165,7 +166,7 @@ private:
             SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE
         ));
 
-        initAssert(m_renderer.get(), u8"创建渲染器失败");
+        initAssert(m_renderer.get(), "创建渲染器失败");
     }
 
     /** @brief 处理SDL事件 */
@@ -220,6 +221,7 @@ private:
         if (!config->is_game_over) {
             m_place_panel->onInput(m_event);
             m_upgrade_panel->onInput(m_event);
+            PlayerManager::instance()->onInput(m_event);
         }
     }
 
@@ -234,6 +236,7 @@ private:
             m_status_bar.onUpdate(m_renderer.get());
             WaveManager::instance()->onUpdate(delta_time);
             EnemyManager::instance()->onUpdate(delta_time);
+            PlayerManager::instance()->onUpdate(delta_time);
             BulletManager::instance()->onUpdate(delta_time);
             TowerManager::instance()->onUpdate(delta_time);
             CoinManager::instance()->onUpdate(delta_time);
@@ -251,6 +254,7 @@ private:
         BulletManager::instance()->onRender(m_renderer.get());
         TowerManager::instance()->onRender(m_renderer.get());
         CoinManager::instance()->onRender(m_renderer.get());
+        PlayerManager::instance()->onRender(m_renderer.get());
 
         if (!config->is_game_over) {
             m_place_panel->onRender(m_renderer.get());

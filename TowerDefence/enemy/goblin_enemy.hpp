@@ -35,16 +35,16 @@ public:
         static const std::vector<int> index_list_right = { 10, 11, 12, 13, 14 };
 
         // 设置普通纹理的四向动画
-        setAnimation(anim_up, tex_goblin, 5, 4, index_list_up, 0.15);
-        setAnimation(anim_down, tex_goblin, 5, 4, index_list_down, 0.15);
-        setAnimation(anim_left, tex_goblin, 5, 4, index_list_left, 0.15);
-        setAnimation(anim_right, tex_goblin, 5, 4, index_list_right, 0.15);
+        setAnimation(anim_up, tex_goblin, true, 5, 4, index_list_up, 0.15);
+        setAnimation(anim_down, tex_goblin, true, 5, 4, index_list_down, 0.15);
+        setAnimation(anim_left, tex_goblin, true, 5, 4, index_list_left, 0.15);
+        setAnimation(anim_right, tex_goblin, true, 5, 4, index_list_right, 0.15);
 
         // 设置素描纹理的四向动画
-        setAnimation(anim_up_sketch, tex_goblin_sketch, 5, 4, index_list_up, 0.15);
-        setAnimation(anim_down_sketch, tex_goblin_sketch, 5, 4, index_list_down, 0.15);
-        setAnimation(anim_left_sketch, tex_goblin_sketch, 5, 4, index_list_left, 0.15);
-        setAnimation(anim_right_sketch, tex_goblin_sketch, 5, 4, index_list_right, 0.15);
+        setAnimation(anim_up_sketch, tex_goblin_sketch, true, 5, 4, index_list_up, 0.15);
+        setAnimation(anim_down_sketch, tex_goblin_sketch, true, 5, 4, index_list_down, 0.15);
+        setAnimation(anim_left_sketch, tex_goblin_sketch, true, 5, 4, index_list_left, 0.15);
+        setAnimation(anim_right_sketch, tex_goblin_sketch, true, 5, 4, index_list_right, 0.15);
 
         // 从配置模板中初始化基础属性
         max_hp = goblin_template.hp;                            // 最大生命值

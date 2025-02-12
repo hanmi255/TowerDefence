@@ -32,16 +32,6 @@ public:
 	{
 		timer_fire.setOneShot(true);
 		timer_fire.setOnTimeOut([&] { can_fire = true; });
-
-		setAnimationProperties(anim_idle_up, true, 0.2);
-		setAnimationProperties(anim_idle_down, true, 0.2);
-		setAnimationProperties(anim_idle_left, true, 0.2);
-		setAnimationProperties(anim_idle_right, true, 0.2);
-
-		setAnimationProperties(anim_fire_up, false, 0.2, [&] { updateIdleAnimation(); });
-		setAnimationProperties(anim_fire_down, false, 0.2, [&] { updateIdleAnimation(); });
-		setAnimationProperties(anim_fire_left, false, 0.2, [&] { updateIdleAnimation(); });
-		setAnimationProperties(anim_fire_right, false, 0.2, [&] { updateIdleAnimation(); });
 	}
 
 	~Tower() = default;
@@ -102,19 +92,50 @@ public:
 
 protected:
 	/**
+	 * @brief 更新静止状态的动画
+	 * 根据当前朝向更新对应的静止动画
+	 */
+	void updateIdleAnimation()
+	{
+		switch (facing)
+		{
+		case Facing::UP:
+			anim_current = &anim_idle_up;
+			break;
+		case Facing::DOWN:
+			anim_current = &anim_idle_down;
+			break;
+		case Facing::LEFT:
+			anim_current = &anim_idle_left;
+			break;
+		case Facing::RIGHT:
+			anim_current = &anim_idle_right;
+			break;
+		}
+	}
+
+	/**
 	 * @brief 设置动画
 	 * @param anim 动画对象
 	 * @param texture 动画纹理
+	 * @param loop 是否循环播放
 	 * @param num_h 动画横向帧数
 	 * @param num_v 动画纵向帧数
 	 * @param index_list 动画帧索引列表
+	 * @param interval 帧间隔
+	 * @param call_back 动画结束回调函数
 	 *
 	 * 设置动画的贴图、帧索引列表等属性
 	 */
-	void setAnimation(Animation& anim, SDL_Texture* texture, int num_h, int num_v, const std::vector<int>& index_list)
+	void setAnimation(Animation& anim, SDL_Texture* texture, bool loop, int num_h, int num_v, const std::vector<int>& index_list, double interval, std::function<void()> call_back = nullptr)
 	{
+		anim.setLoop(loop);
+		anim.setInterval(interval);
 		anim.setFrameData(texture, num_h, num_v, index_list);
+		if (call_back)
+			anim.setOnFinished(call_back);
 	}
+	
 protected:
 	Vector2 size;								 // 防御塔的大小
 
@@ -141,29 +162,6 @@ private:
 
 private:
 	/**
-	 * @brief 更新静止状态的动画
-	 * 根据当前朝向更新对应的静止动画
-	 */
-	void updateIdleAnimation()
-	{
-		switch (facing)
-		{
-		case Facing::UP:
-			anim_current = &anim_idle_up;
-			break;
-		case Facing::DOWN:
-			anim_current = &anim_idle_down;
-			break;
-		case Facing::LEFT:
-			anim_current = &anim_idle_left;
-			break;
-		case Facing::RIGHT:
-			anim_current = &anim_idle_right;
-			break;
-		}
-	}
-
-	/**
 	 * @brief 更新开火状态的动画
 	 * 根据当前朝向更新对应的开火动画
 	 */
@@ -184,21 +182,6 @@ private:
 			anim_current = &anim_fire_right;
 			break;
 		}
-	}
-
-	/**
-	 * @brief 设置动画属性
-	 * @param anim 要设置的动画
-	 * @param loop 是否循环播放
-	 * @param interval 帧间隔
-	 * @param call_back 动画结束回调函数
-	 */
-	void setAnimationProperties(Animation& anim, bool loop, double interval, std::function<void()> call_back = nullptr)
-	{
-		anim.setLoop(loop);
-		anim.setInterval(interval);
-		if (call_back)
-			anim.setOnFinished(call_back);
 	}
 
 	/**

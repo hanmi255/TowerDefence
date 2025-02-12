@@ -35,16 +35,16 @@ public:
 		static const std::vector<int> idx_list_fire_right = { 18, 19, 20 };
 
 		// 设置空闲状态动画
-		setAnimation(anim_idle_up, tex_axeman, 3, 8, idx_list_idle_up);
-		setAnimation(anim_idle_down, tex_axeman, 3, 8, idx_list_idle_down);
-		setAnimation(anim_idle_left, tex_axeman, 3, 8, idx_list_idle_left);
-		setAnimation(anim_idle_right, tex_axeman, 3, 8, idx_list_idle_right);
+		setAnimation(anim_idle_up, tex_axeman, true, 3, 8, idx_list_idle_up, 0.2);
+		setAnimation(anim_idle_down, tex_axeman, true, 3, 8, idx_list_idle_down, 0.2);
+		setAnimation(anim_idle_left, tex_axeman, true, 3, 8, idx_list_idle_left, 0.2);
+		setAnimation(anim_idle_right, tex_axeman, true, 3, 8, idx_list_idle_right, 0.2);
 
 		// 设置攻击状态动画
-		setAnimation(anim_fire_up, tex_axeman, 3, 8, idx_list_fire_up);
-		setAnimation(anim_fire_down, tex_axeman, 3, 8, idx_list_fire_down);
-		setAnimation(anim_fire_left, tex_axeman, 3, 8, idx_list_fire_left);
-		setAnimation(anim_fire_right, tex_axeman, 3, 8, idx_list_fire_right);
+		setAnimation(anim_fire_up, tex_axeman, false, 3, 8, idx_list_fire_up, 0.2, [&] { updateIdleAnimation(); });
+		setAnimation(anim_fire_down, tex_axeman, false, 3, 8, idx_list_fire_down, 0.2, [&] { updateIdleAnimation(); });
+		setAnimation(anim_fire_left, tex_axeman, false, 3, 8, idx_list_fire_left, 0.2, [&] { updateIdleAnimation(); });
+		setAnimation(anim_fire_right, tex_axeman, false, 3, 8, idx_list_fire_right, 0.2), [&] { updateIdleAnimation(); };
 
 		size.x = 48, size.y = 48;		  // 设置碰撞箱大小
 

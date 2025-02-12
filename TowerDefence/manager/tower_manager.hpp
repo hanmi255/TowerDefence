@@ -12,6 +12,10 @@
 #include <vector>
 #include <memory>
 
+/**
+ * @brief 塔管理器
+ * @details 管理所有塔的创建、更新、渲染、购买、升级等操作
+ */
 class TowerManager : public Manager<TowerManager>
 {
 	friend class Manager<TowerManager>;
@@ -19,6 +23,10 @@ public:
 	using TowerList = std::vector<Tower*>;
 
 public:
+	/**
+	 * @brief 更新所有塔的状态
+	 * @param delta_time 时间增量
+	 */
 	void onUpdate(double delta_time)
 	{
 		for (auto* tower : m_tower_list) {
@@ -26,6 +34,10 @@ public:
 		}
 	}
 	
+	/**
+	 * @brief 渲染所有塔
+	 * @param renderer SDL 渲染器
+	 */
 	void onRender(SDL_Renderer* renderer)
 	{
 		for (auto* tower : m_tower_list) {
@@ -33,6 +45,11 @@ public:
 		}
 	}
 
+	/**
+	 * @brief 获取放置塔的费用
+	 * @param type 塔的类型
+	 * @return 放置塔的费用
+	 */
 	double getPlaceTowerCost(TowerType type) const
 	{
 		static auto* config = ConfigManager::instance();
@@ -52,6 +69,11 @@ public:
 		return 0;
 	}
 
+	/**
+	 * @brief 获取升级塔的费用
+	 * @param type 塔的类型
+	 * @return 升级塔的费用
+	 */
 	double getUpgradeTowerCost(TowerType type) const
 	{
 		static auto* config = ConfigManager::instance();
@@ -74,6 +96,11 @@ public:
 		return 0;
 	}
 
+	/**
+	 * @brief 获取塔的视野范围
+	 * @param type 塔的类型
+	 * @return 塔的视野范围
+	 */
 	double getViewRange(TowerType type) const
 	{
 		static auto* config = ConfigManager::instance();
@@ -90,9 +117,14 @@ public:
 			break;
 		}
 
-		return 0;
+		return 0;	
 	}
 
+	/**
+	 * @brief 放置塔
+	 * @param type 塔的类型
+	 * @param index 塔的位置
+	 */
 	void placeTower(TowerType type, const SDL_Point& index)
 	{
 		std::unique_ptr<Tower> tower = nullptr;
@@ -127,6 +159,10 @@ public:
 		Mix_PlayChannel(-1, sound_pool.find(ResID::Sound_PlaceTower)->second, 0);
 	}
 
+	/**
+	 * @brief 升级塔
+	 * @param type 塔的类型
+	 */
 	void upgradeTower(TowerType type)
 	{
 		static auto* config = ConfigManager::instance();
@@ -153,6 +189,6 @@ protected:
 	~TowerManager() = default;
 
 private:
-	TowerList m_tower_list;
+	TowerList m_tower_list;  // 存储所有塔的列表
 };
 

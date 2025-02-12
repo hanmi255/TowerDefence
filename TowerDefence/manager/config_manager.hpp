@@ -27,7 +27,7 @@ public:
 	 */
 	struct BasicTemplate 
 	{
-		std::string window_title = u8"Tower Defence";  // 游戏窗口标题
+        std::string window_title = "Tower Defence";  // 游戏窗口标题
 		int window_width = 1280;                       // 窗口宽度
 		int window_height = 720;                       // 窗口高度
 	};

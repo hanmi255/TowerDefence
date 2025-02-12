@@ -36,16 +36,16 @@ public:
         static const std::vector<int> index_list_right = { 12, 13, 14, 15, 16, 17 };
 
         // 设置普通纹理的四向动画
-        setAnimation(anim_up, tex_slime, 6, 4, index_list_up, 0.1);
-        setAnimation(anim_down, tex_slime, 6, 4, index_list_down, 0.1);
-        setAnimation(anim_left, tex_slime, 6, 4, index_list_left, 0.1);
-        setAnimation(anim_right, tex_slime, 6, 4, index_list_right, 0.1);
+        setAnimation(anim_up, tex_slime, true, 6, 4, index_list_up, 0.1);
+        setAnimation(anim_down, tex_slime, true, 6, 4, index_list_down, 0.1);
+        setAnimation(anim_left, tex_slime, true, 6, 4, index_list_left, 0.1);
+        setAnimation(anim_right, tex_slime, true, 6, 4, index_list_right, 0.1);
 
         // 设置素描纹理的四向动画
-        setAnimation(anim_up_sketch, tex_slime_sketch, 6, 4, index_list_up, 0.1);
-        setAnimation(anim_down_sketch, tex_slime_sketch, 6, 4, index_list_down, 0.1);
-        setAnimation(anim_left_sketch, tex_slime_sketch, 6, 4, index_list_left, 0.1);
-        setAnimation(anim_right_sketch, tex_slime_sketch, 6, 4, index_list_right, 0.1);
+        setAnimation(anim_up_sketch, tex_slime_sketch, true, 6, 4, index_list_up, 0.1);
+        setAnimation(anim_down_sketch, tex_slime_sketch, true, 6, 4, index_list_down, 0.1);
+        setAnimation(anim_left_sketch, tex_slime_sketch, true, 6, 4, index_list_left, 0.1);
+        setAnimation(anim_right_sketch, tex_slime_sketch, true, 6, 4, index_list_right, 0.1);
 
         // 从配置模板中初始化基础属性
         max_hp = slime_template.hp;                            // 最大生命值
