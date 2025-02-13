@@ -157,6 +157,7 @@ public:
 					&& pos_enemy.y >= rect_hitbox_flash.y
 					&& pos_enemy.y <= rect_hitbox_flash.y + rect_hitbox_flash.h) {
 					enemy->decreaseHP(ConfigManager::instance()->player_template.normal_attack_damage * delta_time);
+					mp += 0.05;
 				}
 			}
 		}

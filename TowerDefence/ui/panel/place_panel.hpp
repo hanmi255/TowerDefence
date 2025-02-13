@@ -117,7 +117,7 @@ protected:
 
 private:
     const SDL_Color color_region_frame = { 30, 80, 162, 175 };    // 区域边框颜色
-    const SDL_Color color_region_content = { 0, 149, 217, 175 };  // 区域内容颜色
+    const SDL_Color color_region_content = { 0, 149, 217, 75 };   // 区域内容颜色
 
     int region_top = 0, region_left = 0, region_right = 0;        // 各个区域的半径
 };

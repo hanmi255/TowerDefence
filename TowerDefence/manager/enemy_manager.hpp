@@ -188,7 +188,7 @@ private:
 
     /**
      * @brief 处理敌人与子弹的碰撞检测
-     * @note 待实现
+     * @details 检查每个敌人是否与子弹位置重叠，如果重叠则造成伤害
      */
     void processBulletCollision()
     {
@@ -199,41 +199,47 @@ private:
 
             const Vector2& size_enemy = enemy->getSize();
             const Vector2& position_enemy = enemy->getPosition();
+            const double min_x = position_enemy.x - size_enemy.x / 2;
+            const double max_x = position_enemy.x + size_enemy.x / 2;
+            const double min_y = position_enemy.y - size_enemy.y / 2;
+            const double max_y = position_enemy.y + size_enemy.y / 2;
 
             for (auto* bullet : bullet_list) {
                 if (!bullet->canCollide()) continue;
 
                 const Vector2& position_bullet = bullet->getPosition();
+                // 如果子弹与敌人的边界没有交集，直接跳过
+                if (position_bullet.x < min_x
+                    || position_bullet.x > max_x 
+                    || position_bullet.y < min_y 
+                    || position_bullet.y > max_y)
+                    continue;
 
-                if (position_bullet.x >= position_enemy.x - size_enemy.x / 2
-                    && position_bullet.x <= position_enemy.x + size_enemy.x / 2
-                    && position_bullet.y >= position_enemy.y - size_enemy.y / 2
-                    && position_bullet.y <= position_enemy.y + size_enemy.y / 2) {
-                    double damage = bullet->getDamage();
-                    double damage_range = bullet->getDamageRange();
+                double damage = bullet->getDamage();
+                double damage_range = bullet->getDamageRange();
 
-                    if (damage_range < 0) {
-                        enemy->decreaseHP(damage);
-                        if (enemy->canRemove()) 
-                            trySpawnCoinProp(position_enemy, enemy->getRewardRatio());
-                    }
-                    else {
-                        for (auto* target_enemy : m_enemy_list) {
-                            const Vector2& position_target_enemy = target_enemy->getPosition();
-
-                            if ((position_target_enemy - position_bullet).length() <= damage_range) {
-                                target_enemy->decreaseHP(damage);
-                                if (target_enemy->canRemove())
-                                    trySpawnCoinProp(position_target_enemy, target_enemy->getRewardRatio());
-                            }
+                if (damage_range < 0) {
+                    // 处理伤害
+                    enemy->decreaseHP(damage);
+                    if (enemy->canRemove())
+                        trySpawnCoinProp(position_enemy, enemy->getRewardRatio());
+                }
+                else {
+                    for (auto* target_enemy : m_enemy_list) {
+                        const Vector2& position_target_enemy = target_enemy->getPosition();
+                        if ((position_target_enemy - position_bullet).length() <= damage_range) {
+                            target_enemy->decreaseHP(damage);
+                            if (target_enemy->canRemove())
+                                trySpawnCoinProp(position_target_enemy, target_enemy->getRewardRatio());
                         }
                     }
-
-                    bullet->onCollide(enemy);
                 }
+
+                bullet->onCollide(enemy);
             }
         }
     }
+
 
     /**
      * @brief 移除标记为无效的敌人对象

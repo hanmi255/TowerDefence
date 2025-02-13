@@ -9,6 +9,7 @@
 #include "tower_manager.hpp"
 #include "bullet_manager.hpp"
 #include "../ui/status_bar.hpp"
+#include "../ui/banner.hpp"
 #include "../ui/panel/panel.hpp"
 #include "../ui/panel/place_panel.hpp"
 #include "../ui/panel/upgrade_panel.hpp"
@@ -41,6 +42,8 @@ public:
     /** @brief 运行游戏主循环 */
     int run(int argc, char** argv) 
     {
+        Mix_FadeInMusic(ResourceManager::instance()->getMusicPool().find(ResID::Music_BGM)->second, -1, 1500);
+
         using clock = std::chrono::high_resolution_clock;
         constexpr double TARGET_FPS = 60.0;
         constexpr double FRAME_TIME = 1.0 / TARGET_FPS;
@@ -90,8 +93,10 @@ protected:
         initAssert(generateTileMapTexture(), "瓦片地图纹理生成失败");
 
         m_status_bar.setPosition(15, 15);
+
         m_place_panel = std::make_unique<PlacePanel>();
         m_upgrade_panel = std::make_unique<UpgradePanel>();
+        m_banner = std::make_unique<Banner>();
     }
 
     /** @brief 清理SDL资源 */
@@ -104,17 +109,18 @@ protected:
     }
 
 private:
-    SDL_Event m_event;                                       // SDL事件
-    bool m_quit = false;                                     // 退出标志
+    SDL_Event m_event;                                        // SDL事件
+    bool m_quit = false;                                      // 退出标志
 
-    StatusBar m_status_bar;                                  // 状态栏
+    StatusBar m_status_bar;                                   // 状态栏
 
-    std::unique_ptr<SDL_Window, SDLDeleter> m_window;        // 游戏窗口
-    std::unique_ptr<SDL_Renderer, SDLDeleter> m_renderer;    // 渲染器
-    std::unique_ptr<SDL_Texture, SDLDeleter> m_tex_tile_map; // 瓦片地图纹理
+    std::unique_ptr<SDL_Window, SDLDeleter> m_window;         // 游戏窗口
+    std::unique_ptr<SDL_Renderer, SDLDeleter> m_renderer;     // 渲染器
+    std::unique_ptr<SDL_Texture, SDLDeleter> m_tex_tile_map;  // 瓦片地图纹理
 
-    std::unique_ptr<PlacePanel> m_place_panel;               // 放置塔面板
-    std::unique_ptr<UpgradePanel> m_upgrade_panel;           // 升级塔面板
+    std::unique_ptr<PlacePanel> m_place_panel;                // 放置塔面板
+    std::unique_ptr<UpgradePanel> m_upgrade_panel;            // 升级塔面板
+    std::unique_ptr<Banner> m_banner;                         // 游戏结束弹窗
 
 private:
     /** @brief 初始化检查 */
@@ -228,6 +234,7 @@ private:
     /** @brief 更新游戏状态 */
     void onUpdate(double delta_time)
     {
+        static bool is_game_over_last = false;
         static auto* config = ConfigManager::instance();
 
         if (!config->is_game_over) {
@@ -240,7 +247,22 @@ private:
             BulletManager::instance()->onUpdate(delta_time);
             TowerManager::instance()->onUpdate(delta_time);
             CoinManager::instance()->onUpdate(delta_time);
+
+            return;
         }
+
+        if (!is_game_over_last && config->is_game_over) {
+            static const auto& sound_pool = ResourceManager::instance()->getSoundPool();
+
+            Mix_FadeOutMusic(1500);
+            Mix_PlayChannel(-1, sound_pool.find(config->is_game_win ? ResID::Sound_Win : ResID::Sound_Loss)->second, 0);
+        }
+
+        is_game_over_last = config->is_game_over;
+
+        m_banner->onUpdate(delta_time);
+        if(m_banner->checkEndDisplay())
+            m_quit = true;
     }
 
     /** @brief 渲染游戏画面 */
@@ -260,7 +282,14 @@ private:
             m_place_panel->onRender(m_renderer.get());
             m_upgrade_panel->onRender(m_renderer.get());
             m_status_bar.onRender(m_renderer.get());
+
+            return;
         }
+
+        int width_screen, height_screen;
+        SDL_GetWindowSizeInPixels(m_window.get(), &width_screen, &height_screen);
+        m_banner->setCenterPosition({ (double)width_screen / 2, (double)height_screen / 2 });
+        m_banner->onRender(m_renderer.get());
     }
 
     /** @brief 生成瓦片地图纹理 */

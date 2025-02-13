@@ -169,5 +169,8 @@
     <ClInclude Include="manager\player_manager.hpp">
       <Filter>头文件\manager</Filter>
     </ClInclude>
+    <ClInclude Include="ui\banner.hpp">
+      <Filter>头文件\ui</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

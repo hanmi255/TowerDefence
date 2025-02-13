@@ -171,6 +171,7 @@
     <ClInclude Include="tower\gunner_tower.hpp" />
     <ClInclude Include="tower\tower.hpp" />
     <ClInclude Include="tower\tower_type.hpp" />
+    <ClInclude Include="ui\banner.hpp" />
     <ClInclude Include="ui\panel\panel.hpp" />
     <ClInclude Include="ui\panel\place_panel.hpp" />
     <ClInclude Include="ui\panel\upgrade_panel.hpp" />

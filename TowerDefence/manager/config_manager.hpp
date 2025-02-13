@@ -53,9 +53,9 @@ public:
 		double speed = 1.0;              // 移动速度
 		double damage = 1;               // 攻击伤害
 		double reward_ratio = 0.5;		 // 击杀奖励系数
-		double recover_interval = 10;    // 恢复间隔时间
-		double recover_range = 0;        // 恢复范围
-		double recover_intensity = 25;   // 恢复强度
+		double recover_interval = 10;    // 治疗间隔时间
+		double recover_range = 0;        // 治疗范围
+		double recover_intensity = 25;   // 治疗强度
 	};
 
 	/**
