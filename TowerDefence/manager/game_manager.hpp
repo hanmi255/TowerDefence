@@ -89,8 +89,8 @@ protected:
         loadConfig();
         createWindowAndRenderer();
 
-        initAssert(ResourceManager::instance()->loadFromFile(m_renderer.get()), "资源管理器初始化失败");
-        initAssert(generateTileMapTexture(), "瓦片地图纹理生成失败");
+        initAssert(ResourceManager::instance()->loadFromFile(m_renderer.get()), u8"资源管理器初始化失败");
+        initAssert(generateTileMapTexture(), u8"瓦片地图纹理生成失败");
 
         m_status_bar.setPosition(15, 15);
 
@@ -124,21 +124,22 @@ private:
 
 private:
     /** @brief 初始化检查 */
-    void initAssert(bool flag, const char* errorMessage)
+    void initAssert(bool flag, const char8_t* error_message)
     {
         if (flag) return;
 
-        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "游戏启动失败", errorMessage, m_window.get());
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, reinterpret_cast<const char*>(u8"游戏启动失败"), reinterpret_cast<const char*>(u8"error_message"), m_window.get());
+
         exit(-1);
     }
 
     /** @brief 初始化SDL系统 */
     void initializeSDL() 
     {
-        initAssert(!SDL_Init(SDL_INIT_EVERYTHING), "SDL初始化失败");
-        initAssert(IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG), "SDL_image初始化失败");
-        initAssert(Mix_Init(MIX_INIT_MP3), "SDL_mixer 初始化失败！");
-        initAssert(!TTF_Init(), "SDL_ttf初始化失败");
+        initAssert(!SDL_Init(SDL_INIT_EVERYTHING), u8"SDL初始化失败");
+        initAssert(IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG), u8"SDL_image初始化失败");
+        initAssert(Mix_Init(MIX_INIT_MP3), u8"SDL_mixer 初始化失败！");
+        initAssert(!TTF_Init(), u8"SDL_ttf初始化失败");
         Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
 
         SDL_SetHint(SDL_HINT_IME_SHOW_UI, "1");
@@ -147,9 +148,9 @@ private:
     /** @brief 加载配置文件 */
     void loadConfig() 
     {
-        initAssert(ConfigManager::instance()->map.loadMap("file/map.csv"), "地图加载失败");
-        initAssert(ConfigManager::instance()->loadLevelConfig("file/level.json"), "关卡配置加载失败");
-        initAssert(ConfigManager::instance()->loadGameConfig("file/config.json"), "游戏配置加载失败");
+        initAssert(ConfigManager::instance()->map.loadMap("file/map.csv"), u8"地图加载失败");
+        initAssert(ConfigManager::instance()->loadLevelConfig("file/level.json"), u8"关卡配置加载失败");
+        initAssert(ConfigManager::instance()->loadGameConfig("file/config.json"), u8"游戏配置加载失败");
     }
 
     /** @brief 创建窗口和渲染器 */
@@ -164,7 +165,7 @@ private:
             SDL_WINDOW_SHOWN
         ));
 
-        initAssert(m_window.get(), "游戏创建窗口失败");
+        initAssert(m_window.get(), u8"游戏创建窗口失败");
 
         m_renderer.reset(SDL_CreateRenderer(
             m_window.get(),
@@ -172,7 +173,7 @@ private:
             SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE
         ));
 
-        initAssert(m_renderer.get(), "创建渲染器失败");
+        initAssert(m_renderer.get(), u8"创建渲染器失败");
     }
 
     /** @brief 处理SDL事件 */
