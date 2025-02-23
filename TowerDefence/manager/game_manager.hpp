@@ -140,6 +140,7 @@ private:
         initAssert(IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG), u8"SDL_image初始化失败");
         initAssert(Mix_Init(MIX_INIT_MP3), u8"SDL_mixer 初始化失败！");
         initAssert(!TTF_Init(), u8"SDL_ttf初始化失败");
+
         Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
 
         SDL_SetHint(SDL_HINT_IME_SHOW_UI, "1");
@@ -312,7 +313,7 @@ private:
             // 查询tile set尺寸
             int tile_set_width, tile_set_height;
             if (SDL_QueryTexture(tex_tile_set->second, nullptr, nullptr, &tile_set_width, &tile_set_height) < 0) {
-                SDL_LogError(SDL_LOG_CATEGORY_RENDER, "查询tile set尺寸失败: %s", SDL_GetError());
+                SDL_LogError(SDL_LOG_CATEGORY_RENDER, "查询tile set尺寸: %s", SDL_GetError());
                 return false;
             }
 
@@ -331,7 +332,7 @@ private:
             ));
 
             if (!m_tex_tile_map) {
-                SDL_LogError(SDL_LOG_CATEGORY_RENDER, "创建tile map纹理失败: %s", SDL_GetError());
+                SDL_LogError(SDL_LOG_CATEGORY_RENDER, "创建tile map纹理: %s", SDL_GetError());
                 return false;
             }
 
