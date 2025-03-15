@@ -41,7 +41,7 @@ public:
         static auto* font = ResourceManager::instance()->getFontPool().find(ResID::Font_Main)->second;
 
         // 保存当前文本内容，用于检测是否发生变化
-        static std::string last_str_val = "";
+        static std::string last_str_val;
         std::string str_val = std::to_string((int)CoinManager::instance()->getCurrentCoinNum());
 
         // 如果文本没有变化，则直接跳过更新
