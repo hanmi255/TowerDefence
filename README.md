@@ -20,11 +20,11 @@ git clone https://github.com/hanmi255/TowerDefence.git
 ### cmake构建
 
 ```bash
-cd your_dir 						  # 进入克隆的目录
-mkdir build && cd build 			  # 创建并进入build目录
-cmake ../ 							  # 启动cmake
-cmake --build .             		  # 使用默认配置(Debug)编译
+cd your_dir                            # 进入克隆的目录
+mkdir build && cd build                # 创建并进入build目录
+cmake ../                              # 启动cmake
+cmake --build .                        # 使用默认配置(Debug)编译
 [可选]cmake --build . --config Release # 特定配置(Release)编译
-cd bin/Debug 						  # 进入Debug目录
-./TowerDefence.exe 					  # 运行游戏
+cd bin/Debug                           # 进入Debug目录
+./TowerDefence.exe                     # 运行游戏
 ```
