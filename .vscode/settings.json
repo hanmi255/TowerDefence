@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "unordered_map": "cpp",
-        "algorithm": "cpp",
-        "cjson.h": "c",
-        "sstream": "cpp",
-        "utility": "cpp"
-    }
-}
