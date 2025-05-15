@@ -1,14 +1,11 @@
 # 列出所有源文件
 set(SOURCES
     main.cpp
-    ${CMAKE_SOURCE_DIR}/third_party/cJSON/cJSON.c
 )
-
-# 设置cJSON源文件为C语言编译
-set_source_files_properties(
-    ${CMAKE_SOURCE_DIR}/third_party/cJSON/cJSON.c
-    PROPERTIES LANGUAGE C
-)
+# 为Qt模块启用自动化处理
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 
 # 添加子目录
 add_subdirectory(basic)
@@ -22,21 +19,14 @@ add_subdirectory(util)
 # 创建可执行文件
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-# 添加cJSON头文件目录
-target_include_directories(${PROJECT_NAME} PRIVATE
-    ${CMAKE_SOURCE_DIR}/third_party/cJSON/include
-)
+# 配置Qt模块
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Sql)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Sql)
 
 # 为MSVC设置编译和链接选项
 if(MSVC)
     # 设置全局运行时库为动态链接
     set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
-
-    # 设置cJSON使用动态运行时库
-    set_source_files_properties(
-        ${CMAKE_SOURCE_DIR}/third_party/cJSON/cJSON.c
-        PROPERTIES COMPILE_FLAGS "/MD$<$<CONFIG:Debug>:d>"
-    )
 
     # 为主目标启用多处理器编译和添加调试信息
     target_compile_options(${PROJECT_NAME} PRIVATE
@@ -52,15 +42,25 @@ if(MSVC)
     )
 endif()
 
+# 链接Qt模块
+target_link_libraries(${PROJECT_NAME}
+    PRIVATE
+    Qt${QT_VERSION_MAJOR}::Widgets
+    Qt${QT_VERSION_MAJOR}::Sql
+)
+
 # 链接第三方库
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
+    cJSON
     SDL2main
     SDL2
     SDL2_gfx
     SDL2_image
     SDL2_mixer
     SDL2_ttf
+	boost_lib
+	ElaWidgetTools
 )
 
 # 链接基本库和模块库

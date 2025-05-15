@@ -17,7 +17,18 @@
 git clone https://github.com/hanmi255/TowerDefence.git
 ```
 
-### cmake构建
+### 构建步骤
+
+#### 安装vcpkg
+
+```bash
+git clone https://github.com/Microsoft/vcpkg
+cd your_vcpkg_dir
+.\bootstrap-vcpkg.bat
+# 配置VCPKG_ROOT环境变量
+```
+
+#### 使用cmake
 
 ```bash
 cd your_dir                            # 进入克隆的目录

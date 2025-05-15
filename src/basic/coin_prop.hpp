@@ -5,7 +5,6 @@
 #include "../manager/resource_manager.hpp"
 #include "tile.hpp"
 
-
 #include <SDL.h>
 
 /**

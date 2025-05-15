@@ -9,7 +9,7 @@
 #include "tower_manager.hpp"
 #include "bullet_manager.hpp"
 #include "../ui/status_bar.hpp"
-#include "../ui/banner.hpp"
+#include "../ui/end_banner.hpp"
 #include "../ui/panel/panel.hpp"
 #include "../ui/panel/place_panel.hpp"
 #include "../ui/panel/upgrade_panel.hpp"

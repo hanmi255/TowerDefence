@@ -1,0 +1,9 @@
+{
+    "name": "tower-defence",
+    "version": "1.0.0",
+    "dependencies": [
+        "boost-asio",
+        "boost-system"
+    ],
+    "builtin-baseline": "5cf60186a241e84e8232641ee973395d4296978f"
+}

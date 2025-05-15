@@ -13,6 +13,8 @@
  */
 enum class ResID
 {
+	Tex_StartMenu,
+
 	Tex_TileSet,
 
 	Tex_Player,
@@ -124,6 +126,8 @@ public:
 	 */
 	bool loadFromFile(SDL_Renderer *renderer)
 	{
+		m_texturePool[ResID::Tex_StartMenu] = IMG_LoadTexture(renderer, "res/image/start_menu.png");
+
 		m_texturePool[ResID::Tex_TileSet] = IMG_LoadTexture(renderer, "res/image/tileset.png");
 
 		m_texturePool[ResID::Tex_Player] = IMG_LoadTexture(renderer, "res/image/player.png");
